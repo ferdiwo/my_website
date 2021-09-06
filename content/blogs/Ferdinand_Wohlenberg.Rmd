@@ -3,15 +3,16 @@ categories:
 - ""
 - ""
 date: "2017-10-31T22:42:51-05:00"
-description: Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna
-  sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa
-  sed magna lacinia magna  lorem ipsum dolor. Nullam et orci eu lorem
-  consequat tincidunt. Vivamus et sagittis tempus.
+description: Nullam et orci lorem consequat tincidunt vivamus et sagittis magna
+  sed nunc rhoncus condimentum sem. In efficiturigula tate urna. Maecenas massa
+  sed magna lacinia magna  lorem ipsum Nullam et orci eu lorem
+  consequat tincidunt. Vivamus et  tempus.
 draft: false
 image: pic07.jpg
 keywords: ""
 slug: ferdinandwohlenberg
 title: Aliquam
+---
 
 ```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
