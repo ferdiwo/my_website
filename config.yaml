@@ -1,12 +1,12 @@
 baseURL: https://ferdinand-wohlenberg-portfolio.netlify.app/
 languageCode: en-us
-title: Portfolio website for Ferdinand Wohlenberg
+title: Portfolio - Ferdinand Wohlenberg
 theme: forty
 googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
-    buttonText: Get Started
+    buttonText: About Me
     subtitle: |-
       Masters in Analytics and Management candidate at London Business School
     title: Ferdinand Wohlenberg
@@ -41,21 +41,21 @@ params:
         text: 'Design: '
         url: https://www.html5up.net
     social:
-      - icon: fa-twitter
-        label: Twitter
-        url: https://www.twitter.com
-      - icon: fa-facebook
-        label: Facebook
-        url: https://www.facebook.com
+    #  - icon: fa-twitter
+    #    label: Twitter
+    #    url: https://www.twitter.com
+    #  - icon: fa-facebook
+    #    label: Facebook
+    #    url: https://www.facebook.com
       - icon: fa-instagram
         label: Instagram
-        url: https://www.instagram.com
+        url: https://www.instagram.com/ferdiwo
       - icon: fa-github
         label: GitHub
-        url: https://www.github.com
+        url: https://www.github.com/ferdiwo
       - icon: fa-linkedin
         label: LinkedIn
-        url: https://www.linkedin.com
+        url: https://www.linkedin.com/ferdinandwohlenberg
   image: ''
   name: Your name
   navigation:
@@ -68,15 +68,15 @@ params:
     links:
       - name: Home
         url: '#'
+      - name: About Me
+        url: blogs/ferdinandwohlenberg
       - name: Blogs
         url: blogs
-      - name: Generic Blog
-        url: blogs/ipsum
-      - name: Elements
-        url: elements.html
+     # - name: Elements
+    #    url: elements.html
     menu: Menu
-    subtitle: By HTML5 Up
-    title: Forty
+    #subtitle: By HTML5 Up
+    #title: Forty
   tiles:
     enable: yes
     showcase:
