@@ -7,6 +7,7 @@ disqusShortname: ''
 params:
   banner:
     buttonText: About Me
+    url: blogs/ferdinandwohlenberg
     subtitle: |-
       Masters in Analytics and Management candidate at London Business School
     title: Ferdinand Wohlenberg
@@ -19,6 +20,7 @@ params:
         title: Address
     buttonClear: Clear
     buttonSend: Send message
+    formEmail: fwohlenberg.mam2022@london.edu
     email:
       - email: fwohlenberg.mam2022@london.edu
         title: Email
