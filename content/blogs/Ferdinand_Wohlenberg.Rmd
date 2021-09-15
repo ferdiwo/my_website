@@ -29,18 +29,21 @@ From an academical standpoint, my background lies in business. A 4-year undergra
 During my early career, I have gathered experience in Consulting, Venture Capital and Entrepreneurship. Especially fast-paced environments appeal to me, which is why I am looking to go back into Consulting after graduating from LBS. The large variety of projects in combination with its bright workforce make Consulting the perfect entry-level job for me to further develop my professional and personal skillset.\ 
    
 ### Education 
-- [LinkedIn] (https://linkedin.com/in/ferdinandwohlenberg)
-- [Github] (https://github.com/ferdiwo)
 
 
+
+
+```{r}
 \usepackage{tcolorbox}
-
 \newtcolorbox{blackbox}{
   colback=black,
   colframe=orange,
   coltext=white,
   boxsep=5pt,
   arc=4pt}
+```
+
+
 
 ```
 
