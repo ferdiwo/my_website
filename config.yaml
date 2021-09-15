@@ -20,7 +20,6 @@ params:
         title: Address
     buttonClear: Clear
     buttonSend: Send message
-    formEmail: f/xjvjlgaa
     email:
       - email: fwohlenberg.mam2022@london.edu
         title: Email
