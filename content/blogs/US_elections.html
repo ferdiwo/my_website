@@ -8,279 +8,201 @@ draft: false
 image:
 keywords: ""
 slug: election
-title: Trump Votes vs. Vaccination Status by County
+title: Trump Votes vs. Vaccination Status by U.S. County
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
-<div id="introduction" class="section level1">
-<h1>Introduction</h1>
-<p>During my time at LBS, I worked on a project that compared the % of Trump votes in each US county with the respective % of population (by county) that is fully vaccinated against Covid-19.By conducting this analysis, we were able to generate some insights regarding the willingness of Trump voters towards being vaccinated against Covid-19.</p>
-<p>In addition, we looked at the population of each county, as larger counties usually have a bigger influence on elections, as well as on fighting Covid-19. </p>
-<p>Before we were able to conduct any analysis, we had to collect data by using three different sources:. Vaccination by county: <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh">CDC data</a>
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p>During my time at LBS, our professor provided us with an article (<a href="https://acasignups.net/21/07/18/racial-factor-theres-77-counties-which-are-deep-blue-also-low-vaxx-guess-what-they-have">The Racial Factor: There’s 77 Counties Which Are Deep Blue But Also Low-Vaxx. Guess What They Have In Common?</a>) that compared the % of Trump votes in each US county with the respective % of population (by county) that is fully vaccinated against Covid-19. The graph was intended to generate some insights regarding the willingness of Trump voters towards being vaccinated against Covid-19. Furthermore, the graph looked at the population of each county, as larger counties usually have a bigger influence on elections, as well as on fighting Covid-19.</p>
+<p>The graph generated some really interesting insights and I decided to reproduce the graph by using R coding.</p>
+</div>
+<div id="data-analysis" class="section level1">
+<h1>Data Analysis</h1>
+<p>Before I was able to conduct any analysis, I had to collect data by using three different sources:. Vaccination by county: <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh">CDC data</a>
 2. Election Results: <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">County Presidential Election Returns 2000-2020</a>
 3. Population estimate: <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232">Population by county</a></p>
-<div id="general-setup" class="section level2">
-<h2>General Setup</h2>
-<p>Before choosing the type of graph you want the data to be displayed in, you have to initiate <code>ggplot</code> by calling <code>ggplot()</code> and providing the so-called aesthetics, which specify values on x-axis and y-axis. </p>
-<p><strong>Note:</strong> Some charts don’t require a y-value, as they provide distributions of only one specific variable. </p>
-<p>Aesthetics also provide the opportunity to color or size items according to specific characteristics. </p>
-<p>The initiation of <code>ggplot</code> itself doesn’t provide any output. By adding more functions we can add points, lines, etc. to the graph.</p>
-<p>The basic initiation looks the following way: <code>ggplot(data, aes(x=x-variable, y = y-variable))</code></p>
+<div id="loading-libraries" class="section level2">
+<h2>Loading Libraries</h2>
+<pre class="r"><code>library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(ggthemes)
+library(skimr)
+library(janitor)
+library(vroom)</code></pre>
 </div>
-<div id="scatter-plot" class="section level2">
-<h2>Scatter Plot</h2>
-<p>A scatter plot is very useful for examining relationships between two variables. It shows the effect of an independent variable (x) on a dependent variable (y).</p>
-<p>We can tell <code>ggplot</code> to draw a scatter plot by adding <code>geom_point()</code> after initizalizing <code>ggplot()</code>.</p>
-<p>Let’s say we have a dataset for employees that includes their salary, experience, gender, and more. If we want to analyse the relationship between experience and salary we can draw the following scatter plot:</p>
-<pre class="r"><code>#Initiate ggplot
-ggplot(data_employees, aes(x=experience, y=salary))+
-  #Add geom_point
-  geom_point()</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/scatter_plot%20experience%20vs.%20salary-1.png" width="768" /></p>
-<p>As you can see, this is a very basic scatter plot without a title and only the variable names on the x- and y-axis. By using the function <code>labs</code> we can specify the plot and axis titles.</p>
-<pre class="r"><code>#Initiate ggplot
-ggplot(data_employees, aes(x=experience, y=salary))+
-  #Add geom_point
-  geom_point()+
-  #Add titles
-  labs(
-    title = &quot;Relationship between experience and salary&quot;,
-    x = &quot;Experience (in years)&quot;,
-    y = &quot;Salary (in USD)&quot;
-  )</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/scatter_plot2%20experience%20vs.%20salary-1.png" width="768" /></p>
-<p>This looks already better, but we can tune the graphs even further by adding additional arguments and functions. 
-To be able to make better inferences, we can add a trend line by adding the function <code>geom_smooth(method=lm)</code>. The geom_smooth function usually returns a grey background in addition to the trendline which represents the confidence interval. By adding the argument <code>se=FALSE</code>, it can be turned off. 
-Or we could color the points according to the gender of the employee by including the argument <code>color = gender</code> in the ggplot initialization.</p>
-<p>Let’s see what it would a scatter plot would look like with a trendline and color according to gender:</p>
-<pre class="r"><code>ggplot(data_employees, aes(x=experience, y=salary, color=gender))+
-  #Add geom_point
-  geom_point()+
-  #Add titles
-  labs(
-    title = &quot;Relationship between experience and salary&quot;,
-    x = &quot;Experience (in years)&quot;,
-    y = &quot;Salary (in USD)&quot;,
-  )+
-  #Adding a trendline, without confidence intervals
-  geom_smooth(method = lm, se=FALSE)</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/scatter_plot3%20experience%20vs.%20salary-1.png" width="768" /></p>
-<p>This graph provides much more insights than the previous graphs. We can see that for both male and female employees, salary increases with experience, whereas the correlation is stronger for female employees. </p>
-<p>Another useful feature of <code>ggplot</code> is the <code>facet_wrap</code> function if we want to compare plots across a categorical variable. In this case we plotted male and female employees in the same graph, but we can also plot them separately.</p>
-<pre class="r"><code>ggplot(data_employees, aes(x=experience, y=salary))+
-  #Add geom_point
-  geom_point()+
-  #Add titles
-  labs(
-    title = &quot;Relationship between experience and salary&quot;,
-    x = &quot;Experience (in years)&quot;,
-    y = &quot;Salary (in USD)&quot;,
-  )+
-  #Adding a trendline, without confidence intervals
-  geom_smooth(method = lm, se=FALSE)+
-  #Generate separate graphs for each gender
-  facet_wrap(~gender) </code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/experience%20vs.%20salary%20by%20gender%20facet_wrap-1.png" width="768" /></p>
-</div>
-<div id="line-chart" class="section level2">
-<h2>Line Chart</h2>
-<p>Line charts connect values in the order of x-axis values. This can be very helpful when plotting data over time, like stock prices or comparing values across month. </p>
-<p>When using line charts, it is very important to think about the <code>group</code> argument in the <code>ggplot</code> aesthetics, which requires input to a variable for which a value can only occur once. By that I mean, when mapping values across years, days or months will occur multiple times in the dataset and <code>geom_line</code> will have a hard time connecting the dots. Therefore, we need to tell <code>geom_line</code> a grouping so it connects the dots separately for each year.
-In this case, we don’t require a grouping, as every value is unique. However, we still need to specify the group variable by simply putting <code>group=1</code>, which tells <code>ggplot</code> that no grouping is required.</p>
-<p>Let’s assume we have data for bike rentals in London and want to have a look at the average number of rentals per month between 2016 and 2019. In the following section, we will draw a line chart that will display the average rentals per month, computed by using data from 2016 to 2019.</p>
-<pre class="r"><code>#Compute expected average bike rentals in each month
-exp_bikes_per_month &lt;- bike %&gt;%
-  filter(year %in% 2016:2019) %&gt;%
-  group_by(month) %&gt;%
-  summarize(
-    monthly_average = mean(bikes_hired)
-  )
+<div id="downloading-data" class="section level2">
+<h2>Downloading data</h2>
+<pre class="r"><code># Download CDC vaccination by county
+cdc_url &lt;- &quot;https://data.cdc.gov/api/views/8xkx-amqh/rows.csv?accessType=DOWNLOAD&quot;
+vaccinations &lt;- vroom(cdc_url) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  filter(fips != &quot;UNK&quot;) # remove counties that have an unknown (UNK) FIPS code
 
-#Initialize ggplot. If no grouping is required, specify group = 1
-ggplot(exp_bikes_per_month, aes(x=month, y=monthly_average, group=1)) +
-  #Add line to chart
-  geom_line()+
-  #Add titles
-  labs(
-    title = &quot;Monthly average bike rentals in London&quot;,
-    x = &quot;Month&quot;,
-    y = &quot;Average bike rentals&quot;
-  )</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/average%20bike%20rentals%20per%20month-1.png" width="768" /></p>
-<p>The graph shows us that most bikes are rented in July with more than 37500 bikes, on average, in one month.</p>
-</div>
-<div id="bar-chart" class="section level2">
-<h2>Bar Chart</h2>
-<p>Bar charts are often a good alternative to scatter plots when you have a categorical variable and either want to count its occurrence or compare a dependent variable among categories. </p>
-<p>As always, we start by initializing <code>ggplot</code> and then add <code>geom_col()</code> if we have a dependent variable or <code>geom_bar()</code> if we only provide one variable and want to count its occurrence. Let’s have a look use cases for both of those examples. </p>
-<p>For simplicity reasons, we stick to the initial employee data that was used in the scatter plot section. We start by creating a bar chart comparing the average salary across gender. </p>
-<p><strong>Note:</strong> In order to plot the graph, we first have to compute the average salary per gender.</p>
-<pre class="r"><code>#Computing average salary by gender
-data_employees_average &lt;- data_employees %&gt;%
-  group_by(gender) %&gt;%
-  summarize(
-    average_salary = mean(salary)
-  )</code></pre>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees_average, aes(x=gender, y=average_salary))+
-  #Specify bar chart. The width of columns can be changed by providing the &quot;width&quot; argument
-  geom_col(width = 0.5)+
-  #provide titles
-  labs(
-    title = &quot;Compare average salary across gender&quot;,
-    x = &quot;Gender&quot;,
-    y = &quot;Salary (in USD)&quot;
-  )</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/bar%20chart%20gender%20and%20mean%20salary-1.png" width="768" /></p>
-<p>If we want, we could also color the bars according to the gender to make it more visual, even though it might not necessarily provide further insights. Naturally, a legend will be created when applying the <code>fill</code>argument to color the bars, but in a bar chart that display the categorical variables on the x-axis, it might be a good idea to remove the legend by adding <code>theme(legend.position = "none")</code>. </p>
-<p>The <code>theme</code>function is generally a very strong function to modify graphs, so if you are interested into fine-tuning graphs have a look at it <a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a>.</p>
-<p>Going back to the bar chart, let’s have a quick look at a colored version:</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees_average, aes(x=gender, y=average_salary, fill = gender))+
-  #Specify bar chart. The width of columns can be changed by providing the &quot;width&quot; argument
-  geom_col(width = 0.5)+
-  #provide titles
-  labs(
-    title = &quot;Compare average salary across gender&quot;,
-    x = &quot;Gender&quot;,
-    y = &quot;Salary (in USD)&quot;
-  )+
-  #Hide legend
-  theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/colored%20bar%20chart-1.png" width="768" /></p>
-<p>Now that bar charts with x- and y-variables have been addressed, let’s have a look at bar charts that only take a look at one variable and display the number of occurences of that variable. The easieast example is to look at the distribution of gender.</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=gender))+
-  #Specify bar chart. The width of columns can be changed by providing the &quot;width&quot; argument
-  geom_bar(width = 0.5)+
-  #provide titles
-  labs(
-    title = &quot;Distribution of gender&quot;,
-    x = &quot;Gender&quot;
-  )</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/dsitribution%20of%20gender-1.png" width="768" /></p>
-<p>From this graph, we can see that we have slightly more female employees than male employees in the dataset.</p>
-</div>
-<div id="density-plot" class="section level2">
-<h2>Density Plot</h2>
-<p>If we want to have a look at the distribution of values, we can either use a density graph or a box plot. In this section, we will concentrate on the first option, the density plot. </p>
-<p>The density plot provides the distribution of a given variable and provides insights whether a certain distribution is normally distributed or skewed. Going back to the employee dataset, we can analyze the distribution of salary.</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=salary))+
-  #Plot Density graph
-  geom_density()+
-  #Add titles
-  labs(
-    title = &quot;Distribution of salary&quot;,
-    x = &quot;Salary (in USD)&quot;,
-    y = &quot;Density&quot;
-  )+
-  #Expand x-axis to go from 30,000 to 100,000
-  expand_limits(x = c(30000,100000))</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/density%20plot%20salary-1.png" width="768" /></p>
-<p>From the graph, we can take that most employees earn between $65000 and $70000 with a slight skew to the left. Without modifying the graph, we didn’t see the endpoints and therefore couldn’t properly analyze the skewness. Hence, I added the function <code>expand_limits</code> to specify the x-axis dimensions myself.</p>
-<p>We can do the same density plots by gender, simply by adding <code>fill = gender</code>in the<code>ggplot</code> aesthetics. By doing so, it will draw to density plots, one for each gender.</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=salary, fill=gender))+
-  #Plot Density graph. alpha = 0.3 sets the transparency of the curve
-  geom_density(alpha = 0.3)+
-  #Add titles
-  labs(
-    title = &quot;Distribution of salary&quot;,
-    x = &quot;Salary (in USD)&quot;,
-    y = &quot;Density&quot;
-  )+
-  #Expand x-axis to go from 30,000 to 100,000
-  expand_limits(x = c(30000,100000))</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/density%20plot%20for%20salary%20by%20gender-1.png" width="768" /></p>
-<p>Here, we can see the distribution of salary for more employees is further to the right, implying that male are earning more than female employees.</p>
-</div>
-<div id="box-plot" class="section level2">
-<h2>Box Plot</h2>
-<p>Similary to a density plot, we can use box plots to visualize distributions. Especially when comparing distributions across a categorial variable, box plots are very useful. In general, box plots display the median as the black straight line in the middle of the box and the upper and lower end of the box are the 75th and 25th percentile, respectively.</p>
-<p>Let’s have a look at such graph for the distribution of salary across gender:</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=gender, y=salary))+
-  #Draw boxplot
-  geom_boxplot()+
-  #Add titles
-  labs(
-    title = &quot;Distribution of salary across gender&quot;,
-    x = &quot;Gender&quot;,
-    y = &quot;Salary (in USD)&quot;
-  )</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/box%20plot%20salary%20across%20gender-1.png" width="768" /></p>
-<p>The box plot graph shows us that male employees have a higher median income (ca. $75000 vs $65000), while the 25th percentile of salary for male employees is almost as high as the 75th percentile for female employees. This would be a good basis to conduct further analysis as to why this is the case, as, for example, male employees might have more experience.</p>
-</div>
-<div id="ribbon-plots" class="section level2">
-<h2>Ribbon Plots</h2>
-<p>Ribbon plots draw areas rather than a point or a straight line. This can be very useful if we want to get a feeling for differences among curves or generall of an interval of values.</p>
-<p>If we recall the monthly bike rentals that we looke at in the <code>geom_line</code> section, we can make this graph even more sophisticaed. We could look at how much the monthly bike rentals deviate from the average over the past few years. In that case, we could use <code>geom_ribbon</code> to color the difference between the average monthly rentals and the actual rentals in that month.</p>
-<pre class="r"><code>#Compute expected average bike rentals in each month
-exp_bikes_per_month &lt;- bike %&gt;%
-  filter(year %in% 2016:2019) %&gt;%
-  group_by(month) %&gt;%
-  summarize(
-    monthly_average = mean(bikes_hired)
-  )
-#Compute actual average bike rentals per month
-actual_bikes_per_month &lt;- bike %&gt;%
-  filter(year&gt;=2016) %&gt;%
-  group_by(year, month) %&gt;%
-  summarize(
-    act_monthly_average = mean(bikes_hired)
-  )
-#Merge actual and expected bike rental in one dataframe
-bikes_per_month &lt;- 
-  left_join(actual_bikes_per_month, exp_bikes_per_month, by=&quot;month&quot;)
+# Download County Presidential Election Returns
+# https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ
+election2020_results &lt;- vroom(here::here(&quot;data/countypres_2000-2020.csv&quot;)) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  
+  # just keep the results for the 2020 election
+  filter(year == &quot;2020&quot;) %&gt;% 
+  
+  # change original name county_fips to fips, to be consistent with the other two files
+  rename (fips = county_fips)
 
-#Compute discrepancies in actual and expected bike rentals
-bikes_per_month &lt;- bikes_per_month %&gt;%
+# Download county population data
+population_url &lt;- &quot;https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232&quot;
+population &lt;- vroom(population_url) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  
+  # select the latest data, namely 2019
+  select(fips = fip_stxt, pop_estimate_2019) %&gt;% 
+  
+  # pad FIPS codes with leading zeros, so they are always made up of 5 characters
+  mutate(fips = stringi::stri_pad_left(fips, width=5, pad = &quot;0&quot;))</code></pre>
+<p>The plan is to setup 3 separate dataframes for population, vaccination rate and election results and ultimately merging the dataframe by using the fips variable. Before joining the dataframes, I had to clean the data and make sure it has exactly the information I need for my analysis. </p>
+</div>
+<div id="clean-and-prepare-election-data" class="section level2">
+<h2>Clean and prepare election data</h2>
+<p>First, a new dataframe needs to be created to only include Donald Trump votes. Subsequently, the no. of votes needs to be expressed as a percentage of the overall votes in each district/county.</p>
+<pre class="r"><code># First we filter the dataset only for Donald Trump votes
+election_trump &lt;- election2020_results%&gt;%
+  filter(candidate ==&quot;DONALD J TRUMP&quot;)
+
+#Let&#39;s have a look at the dataset to scan for duplicates
+skim(election_trump)
+
+#By looking at the dataset, we can discover that there are only 3153 unique fips,
+#even though the dataset hat more than 5000 rows. By looking at the mode, 
+#we can see that there are 16 different ways of voting, 
+#which is where the duplicate entries are coming from. We need to add them up. 
+
+election_unique &lt;- aggregate(candidatevotes~fips,data=election_trump, FUN=&quot;sum&quot;)
+
+#As we lost the total votes for each county by filtering for, we need to add them back again by using left_join().
+election_unique_join &lt;- unique(inner_join(election_unique, 
+                        election2020_results[c(&quot;fips&quot;, &quot;totalvotes&quot;)], by=&quot;fips&quot;, 
+                        copy=FALSE))
+
+#Calculate the percentage of people voting for Trump
+election_percentage&lt;- election_unique_join%&gt;%
   mutate(
-    excess_rentals = act_monthly_average - monthly_average,
-    #If actual bike rentals are higher than average
-    up = ifelse(act_monthly_average&gt;monthly_average, excess_rentals, 0),
-    #If average bike rentals are lower than average
-    down = ifelse(act_monthly_average&lt;monthly_average, excess_rentals, 0)
+    vote_percentage=candidatevotes/totalvotes
   )
 
-#Initialize ggplot
-ggplot(bikes_per_month, aes(x=month, group = year))+
-  #Draw a line for the actual number of monthly rentals
-  geom_line(aes(y=act_monthly_average),size=0.4, color=&quot;#333333&quot;)+
-  #Draw a line for the average monthly rentals
-  geom_line(aes(y=monthly_average), size=1, color=&quot;blue&quot;) +
-  #Draw a separate graph for each years
-  facet_wrap(~year)+
-  #Apply white background
-  theme_minimal()+
-  #Draw green areas if actual rentals are higher than average
-  geom_ribbon(aes(ymin=monthly_average,ymax=monthly_average+up), 
-              fill=&quot;#7DCD85&quot;,alpha=0.4)+
-  #Draw red areas if actual rentals are lower than average
-  geom_ribbon(aes(ymin=monthly_average+down,ymax=monthly_average),
-              fill=&quot;#CB454A&quot;,alpha=0.4)+
-  #Add titles
+#Slice dataframe to only include Fips and the vote percentage per county
+election_trump_filtered &lt;- election_percentage %&gt;%
+  select(fips, vote_percentage)
+
+#Quick look at the finished dataframe
+skim(election_trump_filtered)</code></pre>
+</div>
+<div id="clean-and-prepare-vaccination-data" class="section level2">
+<h2>Clean and prepare vaccination data</h2>
+<p>A new dataframe is created that only contains the county and percentage of population being fully vaccinated on September 2 (last available date).</p>
+<pre class="r"><code>#First look at the dataset shows us that there are counties with no 
+#vaccinated people at all, which is strange.
+skim(vaccinations)
+
+#Let&#39;s find out where those zeros are coming from
+vaccinations %&gt;%
+  filter(series_complete_pop_pct==0) %&gt;%
+  count(recip_state, sort=TRUE)
+
+#Most of the zeros seem to be coming from Texas, so let&#39;s have a closer look at 
+#the state Texas
+vaccinations %&gt;%
+  filter(recip_state==&quot;TX&quot;)
+
+#The rows for Texas are filled with zeros, implying no data is being recorded for 
+#Texas. By looking at the CDC database online, it can be seen that Texas provides 
+#aggregate dose count on a national level instead of individual doses. 
+#Therefore, no data is available for Texas. As other counties also had no data 
+#available, we&#39;ll simply take out all counties with a vaccination rate of 0%.
+
+#Filter for the last available date and take out rows were no data was recorded.
+vaccinations_recent &lt;- vaccinations %&gt;%
+  filter(date==&quot;09/02/2021&quot;, series_complete_pop_pct!=0)
+
+#Check for values that don&#39;t seem reasonable where vaccination percentage is 
+#comparatively low
+vaccinations_below10 &lt;- vaccinations_recent %&gt;%
+  filter(series_complete_pop_pct &lt;=10)
+
+#By looking at the skim function below, we can see that 102 states have less than or 
+#equal to 10% of the population vaccinated, which is quite low. But those values
+#are still valid and need to be included.
+skim(vaccinations_below10)
+
+#Select only fips and vaccination percentage, as we only need those to construct 
+#the dataframe that will ultimately build the graph
+vaccinations_fips &lt;- vaccinations_recent %&gt;%
+  select(fips, series_complete_pop_pct)
+
+#Convert vaccination percentage in numerical percentage to adjust it to the other 
+#dataframe with the election results
+vaccinations_fips$series_complete_pop_pct &lt;- 
+  vaccinations_fips$series_complete_pop_pct/100
+
+#Quick look at the final dataframe
+skim(vaccinations_fips)</code></pre>
+</div>
+<div id="merging-the-3-dataframes-tibbles-into-1" class="section level2">
+<h2>Merging the 3 dataframes (tibbles) into 1</h2>
+<p>As all dataframes are prepared with the necessary data, they can now be joined by using <code>inner_join()</code>.</p>
+<pre class="r"><code>#Merge vaccination and trump votes
+vaccination_vote &lt;- inner_join(vaccinations_fips, election_trump_filtered, 
+                              by=&quot;fips&quot;, copy=FALSE)
+
+#Add population numbers
+vacc_vote_pop &lt;- inner_join(vaccination_vote, population, by=&quot;fips&quot;, copy=FALSE)
+
+#Omit all rows with any NA values
+vacc_vote_pop &lt;- na.omit(vacc_vote_pop)</code></pre>
+</div>
+<div id="draw-the-graph" class="section level2">
+<h2>Draw the graph</h2>
+<pre class="r"><code>ggplot(vacc_vote_pop, aes(x=vote_percentage, y=series_complete_pop_pct, 
+                          size=pop_estimate_2019))+
+  geom_point(alpha=0.3)+
+  geom_smooth(method = &quot;lm&quot;)+
+  theme_bw()+
+  #Add 5 horizontal lines
+  geom_hline(yintercept=0.539, linetype=&quot;dashed&quot;, 
+                color = &quot;black&quot;, size=1)+
+  geom_hline(yintercept=0.85, linetype=&quot;dashed&quot;, 
+                color = &quot;black&quot;, size=1)+
+  geom_hline(yintercept=0.508, linetype=&quot;dashed&quot;, 
+                color = &quot;black&quot;, size=1)+
+  geom_hline(yintercept=0.4, size=1)+
+  geom_hline(yintercept=0.6,size=1)+
+  #Add 2 vertical lines
+  geom_vline(xintercept=0.4,size=1)+
+  geom_vline(xintercept=0.6,size=1)+
+  #Put labels according to graph pictured
+  annotate(&quot;text&quot;, x=0.08, y=0.56, label=&quot;TARGET: 53.9%&quot;, color = &quot;blue&quot;, size=3)+
+  annotate(&quot;text&quot;, x=0.13, y=0.87, label=&quot;Herd immunity threshold (?)&quot;, 
+           color = &quot;blue&quot;, size=3)+
+  annotate(&quot;text&quot;, x=0.08 , y=0.52, label=&quot;ACTUAL: 50.8%&quot;, color = &quot;blue&quot;, size=3)+
+  annotate(&quot;text&quot;, x=0.5, y=0.95, label=&quot;EVERY U.S. COUNTY&quot;, color=&quot;black&quot;, size=8)+
+  theme(panel.grid.major = element_line(colour = &quot;grey80&quot;), legend.position = &quot;none&quot;, plot.title=element_text(hjust=0.5))+
   labs(
-    title=&quot;Monthly changes in TfL bike rentals&quot;,
-    subtitle=&quot;Change from monthly average
-shown in blue and calculated between 2016-2019&quot;,
-    y=&quot;Bike rentals&quot;,
-    x=&quot;&quot;,
-    caption = &quot;Source: TfL, London Data Store&quot;
-  )+
-  #Adjust size for title and axes
-  theme(plot.title = element_text(size=14),
-        plot.subtitle=element_text(size = 12),
-        axis.title.y = element_text(face=&quot;bold&quot;, size=10),
-        axis.text.x = element_text(size=9),
-        axis.text.y = element_text(size=10),
-        plot.caption = element_text(size=8),
-        strip.text = element_text(size=8)
-        )</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/Monthly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" /></p>
-<p>The graph clearly shows us when actual monthly rentals are higher than the average measured between 2016 and 2019 by coloring the surplus green, and coloring areas read where actual rentals are below the average. It is very visually appealing and easily interpretable. </p>
+    title=&quot;COVID-19 VACCINATION LEVELS OUT OF POPULATION BY COUNTY&quot;,
+    x=&quot;2020 Trump Vote %&quot;,
+    y=&quot;% of Total Population Vaccinated&quot;
+  ,size=7)+
+  #Change scale to comply with picture
+  scale_y_continuous(breaks=seq(0,1,0.05),labels=function(x) paste0(x*100, &quot;%&quot;),
+                     expand=c(0,0), limits=c(0,1))+
+  scale_x_continuous(breaks=seq(0,1,0.05),labels = function(x) paste0(x*100, &quot;%&quot;),
+                     expand=c(0,0), limits=c(0,1))+
+  #Setting figure dimensions
+  knitr::opts_chunk$set(fig.width=unit(5,&quot;cm&quot;), fig.height=unit(10,&quot;cm&quot;))</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="/blogs/US_elections_files/figure-html/building%20the%20graph-1.png" width="672" /></p>
+<p>The graph shows a negative correlation between Trump votes and the vaccination status. More precise, in counties with more trump voters, a comparably lower proportion of the population is fully vaccinated against Covid-19. Hence, Trump voters seem to be rather reluctant to Covid-19 vaccinations. </p>
+<p>Furthermore, we can see that only very few counties are above the herd immunity threshold, while many counties still have less than 5% of the population vaccinated. </p>
+<p>The points are proportional in size to the county population, therefore, larger points display larger counties. Looking at the graph, we see a lot of large counties clustered around 50% vaccination status and less than 40% of the population being Trump voters. </p>
 </div>
 </div>

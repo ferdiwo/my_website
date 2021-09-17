@@ -24,7 +24,7 @@ Before I was able to conduct any analysis, I had to collect data by using three 
 3.  Population estimate: [Population by county](https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232)  
   
 ## Loading Libraries  
-```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+```{r load-libraries, warning=FALSE, message=FALSE}
 library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
 library(ggthemes)
 library(skimr)
@@ -192,7 +192,7 @@ ggplot(vacc_vote_pop, aes(x=vote_percentage, y=series_complete_pop_pct,
   annotate("text", x=0.13, y=0.87, label="Herd immunity threshold (?)", 
            color = "blue", size=3)+
   annotate("text", x=0.08 , y=0.52, label="ACTUAL: 50.8%", color = "blue", size=3)+
-  annotate("text", x=0.5, y=0.97, label="EVERY U.S. COUNTY", color="black", size=8)+
+  annotate("text", x=0.5, y=0.95, label="EVERY U.S. COUNTY", color="black", size=8)+
   theme(panel.grid.major = element_line(colour = "grey80"), legend.position = "none", plot.title=element_text(hjust=0.5))+
   labs(
     title="COVID-19 VACCINATION LEVELS OUT OF POPULATION BY COUNTY",

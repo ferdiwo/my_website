@@ -1,0 +1,204 @@
+---
+categories:
+- ""
+- ""
+date: "2017-10-31T22:42:51-05:00"
+description: Exploring the effect of Covid-19 on bike rentals in London, UK
+draft: false
+image:
+keywords: ""
+slug: bikerental
+title: Effect of Covid-19 on Bike Rentals in London
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<div id="background" class="section level1">
+<h1>Background</h1>
+<p>Covid-19 had a huge impact on the world by putting people in a situation they have never been in before. Hit by a global pandemic, people were asked to isolate and reduce interactions to a minimum. Some countries even imposed a lockdown that prohibited people from leaving their apartment except for really necessary purposes, such as buying groceries. </p>
+<p>As a consequence, streets were empty and people were generally afraid of catching the virus by touching public surfaces. As London has a very sophisticated infrastructure of renting bikes, I was wondering how the pandemic impacted the rental of bikes. </p>
+<p>My hypothesis had been that numbers must have dropped tremendously, as people didn’t want to use a bike that has been used by numerous people before in fear of catching Covid-19. To analyze this matter further, I downloaded data from TfL about daily bike rentals and produced several graphs to generate insights into the impact of Covid-19 on bike rentals.</p>
+</div>
+<div id="data-analysis" class="section level1">
+<h1>Data Analysis</h1>
+<div id="loading-libraries" class="section level2">
+<h2>Loading Libraries</h2>
+<pre class="r"><code>library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(ggthemes)
+library(skimr)
+library(janitor)
+library(vroom)
+library(httr)
+library(readxl)
+library(lubridate)</code></pre>
+</div>
+<div id="downloading-data" class="section level2">
+<h2>Downloading Data</h2>
+</div>
+<div id="plot-a-distribution-graph-of-bike-rentals-by-month-and-year" class="section level2">
+<h2>Plot a distribution graph of bike rentals by month and year</h2>
+<pre class="r"><code>bike %&gt;%
+  #Only include data after 2015
+  filter(year &gt;= 2015) %&gt;%
+  #Plot graph
+ggplot(aes(x=bikes_hired))+
+  geom_density()+
+  #Plot separately for each month and year
+  facet_grid(year~month)+
+  #Change x-axis labels
+  scale_x_continuous(breaks=seq(20000,60000,20000),labels = function(x) paste0(x/1000, &quot;K&quot;))+
+  #White background
+  theme_minimal()+
+  #Chart and axis title
+  labs(
+    title = &quot;Distribution of daily bike rentals by month and year&quot;,
+    x = &quot;Daily bike rentals&quot;,
+    y = &quot;Density&quot;
+  )</code></pre>
+<p><img src="/blogs/Bike_rental_files/figure-html/plot%20bike%20rentals%20by%20month%20and%20year-1.png" width="960" /></p>
+<p>Looking at the graph, it can be observed that curves are flattening between March and June 2020 compared to previous years, implying larger variances in the number of bikes rented on a given day. In early 2020 Covid-19 hit the world and the first wave of infections arrived around March and April 2020. As previously mentioned, people were put in an unprecedented situation with living through a pandemic. Many people were afraid to go out, in fear of catching the virus, the consequences of which have not yet been fully researched.<br />
+People have lost their daily rhythm by being locked in and working remotely. In previous years, the curve was pretty steep and peaked at around 30k or 40k bikes rented per day, as people probably used them to get to work, but during the first Covid wave that has changed. People used bikes more infrequently and therefore flattening the distribution.
+After more about Covid-19 became known and the lockdown was nullified, people started getting back into their daily rhythm. The curve was getting steeper and started clearly peaking between 30k and 40k bikes. However, comparing 2021 to previous years (2015-2019), it is obvious that people still have more variability in renting bikes. This could be due to the fact that people are working more from home and therefore don’t need to rent bikes to get to work. </p>
+<p>While it is interesting to see a larger variance in bike rentals, it would be nice to see how the actual number of bikes rented has changed due to Covid-19. That’s what we will do in the next section.</p>
+</div>
+<div id="monthly-changes-in-tfl-bike-rentals" class="section level2">
+<h2>Monthly changes in TfL bike rentals</h2>
+<p>In this section, we will have a look at how the average daily bike rental by month compares to the average by month measured between 2016-2019. </p>
+<pre class="r"><code>#Compute expected average bike rentals in each month
+exp_bikes_per_month &lt;- bike %&gt;%
+  filter(year %in% 2016:2019) %&gt;%
+  group_by(month) %&gt;%
+  summarize(
+    monthly_average = mean(bikes_hired)
+  )
+#Compute actual average bike rentals per month
+actual_bikes_per_month &lt;- bike %&gt;%
+  filter(year&gt;=2016) %&gt;%
+  group_by(year, month) %&gt;%
+  summarize(
+    act_monthly_average = mean(bikes_hired)
+  )</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>#Merge actual and expected bike rental in one dataframe
+bikes_per_month &lt;- 
+  left_join(actual_bikes_per_month, exp_bikes_per_month, by=&quot;month&quot;)
+
+#Compute discrepancies in actual and expected bike rentals
+bikes_per_month &lt;- bikes_per_month %&gt;%
+  mutate(
+    excess_rentals = act_monthly_average - monthly_average,
+    up = ifelse(act_monthly_average&gt;monthly_average, excess_rentals, 0),
+    down = ifelse(act_monthly_average&lt;monthly_average, excess_rentals, 0)
+  )
+
+#Draw graph
+ggplot(bikes_per_month, aes(x=month, group = year))+
+  geom_line(aes(y=act_monthly_average),size=0.4, color=&quot;#333333&quot;)+
+  geom_line(aes(y=monthly_average), size=1, color=&quot;blue&quot;) +
+  facet_wrap(~year)+
+  theme_minimal()+
+  geom_ribbon(aes(ymin=monthly_average,ymax=monthly_average+up), 
+              fill=&quot;#7DCD85&quot;,alpha=0.4)+
+  geom_ribbon(aes(ymin=monthly_average+down,ymax=monthly_average),
+              fill=&quot;#CB454A&quot;,alpha=0.4)+
+  labs(
+    title=&quot;Monthly changes in TfL bike rentals&quot;,
+    subtitle=&quot;Change from monthly average
+shown in blue and calculated between 2016-2019&quot;,
+    y=&quot;Bike rentals&quot;,
+    x=&quot;&quot;,
+    caption = &quot;Source: TfL, London Data Store&quot;
+  )+
+  theme(plot.title = element_text(size=14),
+        plot.subtitle=element_text(size = 12),
+        axis.title.y = element_text(face=&quot;bold&quot;, size=10),
+        axis.text.x = element_text(size=9),
+        axis.text.y = element_text(size=10),
+        plot.caption = element_text(size=8),
+        strip.text = element_text(size=8)
+        )</code></pre>
+<p><img src="/blogs/Bike_rental_files/figure-html/Monthly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" />
+The graph display the average daily bike rentals by month measured between 2016 and 2019 as the blue line, and the actual average daily bike rentals for each month using the black line. Whenever the actual values are higher than the 2016-2019 average, the area between the two curves is colored green. When the actual value is below the 2016-2019 average, the area is colored red. </p>
+<p>Jumping straight to 2020, we can actually discover that bike rentals were much lower during the first Covid-19 wave than the average monthly bike rental measured between 2016 and 2019. This finding conforms with the flatter distribution curve. However, in May bike rentals started picking up pace and were higher than the average from previous years. This is interesting, as distribution curves were really flat in May and June 2020, but people were actually using the bikes despite the pandemic. An explanation for this could have been people not wanting to use the Tube and therefore deciding to stay at the fresh air and use a bike instead. </p>
+<p>However, looking at 2021, bike rentals in May and June were lower than the average, which can be lead back to the lockdown the United Kingdom was experiencing.</p>
+<p>This data analysis was conducted on a month basis, but we can dig even deeper by having a look at weekly values. Let’s do a similar analysis to before, but this time we will visualize the deviation (%) of average daily bike rentals by week from the weekly averages measured between 2016 and 2019. </p>
+</div>
+<div id="weekly-changes-in-tfl-bike-rentals" class="section level2">
+<h2>Weekly changes in TfL bike rentals</h2>
+<pre class="r"><code>#Compute expected weekly average bike rentals in each month
+exp_bikes_per_week &lt;- bike %&gt;%
+  filter(year&gt;=2016 &amp; year &lt;=2019) %&gt;%
+  group_by(week) %&gt;%
+  summarize(
+    weekly_average = mean(bikes_hired)
+  )
+
+#Compute actual average bike rentals per week
+actual_bikes_per_week &lt;- bike %&gt;%
+  filter(year&gt;=2016) %&gt;%
+  group_by(week,year) %&gt;%
+  summarize(
+    act_weekly_average = mean(bikes_hired)
+  )</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;week&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>#Merge actual and expected bike rental in one dataframe
+bikes_per_week &lt;- 
+  left_join(actual_bikes_per_week, exp_bikes_per_week, by=&quot;week&quot;)
+
+#Compute discrepancies in actual and expected bike rentals. In addition, 
+#take out week 53 for 2021.
+bikes_per_week &lt;- bikes_per_week %&gt;%
+  filter(!(week==53 &amp; year==2021)) %&gt;%
+  mutate(
+    excess_rentals = (act_weekly_average - weekly_average) / weekly_average,
+    up = if_else(excess_rentals&gt;0, excess_rentals,0),
+    down = if_else(excess_rentals &lt; 0, excess_rentals,0)
+  )
+#Plot graph
+ggplot(bikes_per_week,aes(x=week))+
+         geom_line(aes(y=excess_rentals), size=0.2)+
+  facet_wrap(~year)+
+  theme_minimal()+
+  geom_ribbon(aes(ymin=down,ymax=0),
+              fill=&quot;#CB454A&quot;,
+              alpha=0.4)+
+  geom_ribbon(aes(ymin=0, ymax=up), 
+              fill=&quot;#7DCD85&quot;, 
+              alpha=0.4)+
+  geom_rug(data=subset(bikes_per_week, excess_rentals &gt; 0), 
+           sides=&quot;b&quot;, 
+           color=&quot;#7DCD85&quot;)+
+  geom_rug(data=subset(bikes_per_week, excess_rentals &lt; 0), 
+           sides=&quot;b&quot;, 
+           color=&quot;#CB454A&quot;)+
+  annotate(geom = &quot;rect&quot;, xmin = 14, xmax = 26, ymin = -Inf, ymax = Inf, fill = &quot;grey&quot;, alpha=0.3)+
+  annotate(geom = &quot;rect&quot;, xmin = 40, xmax = 52, ymin = -Inf, ymax = Inf, fill = &quot;grey&quot;, alpha=0.3)+
+  scale_y_continuous(breaks=seq(-0.5,1,0.5),labels=function(x) paste0(x*100, &quot;%&quot;),limits=c(-0.6,1))+
+  scale_x_continuous(breaks=seq(0,53,13),labels=c(&quot;&quot;,&quot;13&quot;, &quot;26&quot;, &quot;39&quot;, &quot;53&quot;))+
+  labs(
+    title=&quot;Weekly changes in TfL bike rentals&quot;,
+    subtitle=&quot;% change from weekly averages
+calculated between 2016-2019&quot;,
+    y=&quot;&quot;,
+    x=&quot;week&quot;,
+    caption = &quot;Source: TfL, London Data Store&quot;
+)+
+  theme(plot.title = element_text(size=14, face=&quot;bold&quot;),
+        plot.subtitle=element_text(size = 12, face=&quot;bold&quot;),
+        axis.title.x = element_text(face=&quot;bold&quot;, size=12),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        plot.caption = element_text(size=8),
+        strip.text = element_text(size=10)
+        )</code></pre>
+<p><img src="/blogs/Bike_rental_files/figure-html/Weekly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" />
+Jumping straight again to 2020, we can actually see that Covid-19 had a severe impact on bike rental. The first few weeks in 2020, where Covid first hit the population in the UK, bike rentals dropped tremendously, as shown by the red area around week 13. This agrees with the previously generated graph that displayed a reduction in bike rentals around March and April 2020. Then again, as seen in the previous graph, bike rentals increased around may (week 20) and went above the average bike rental from previous years.</p>
+<p>Looking at 2021, the first 10 weeks of 2021 went quite bad for bike rental, probably due to another lockdown in the UK.</p>
+</div>
+<div id="summary-of-findings" class="section level2">
+<h2>Summary of findings</h2>
+<p>The Covid-19 pandemic definitely had its effect on bike rentals in London. When the first wave hit the UK, bike rentals went down by a lot, probably in fear of catching the virus and also the reduced need to use a bike to get to work. However, people quickly recovered from the initial fear and started using bikes after the first wave more than in the previous years. This could potentially be lead back to the fact that people didn’t want to use the subway, but rather stay at the fresh air with a bike, since the risk of catching the Covid virus is much lower.</p>
+<p>It is generally very obvious that the deviation in daily bike rentals increased a lot since the pandemic, as people go into lockdowns, which reduces the number of rentals, but are overly enthusiastic when a lockdown ends and explore the city with bikes much more than before.</p>
+</div>
+</div>
