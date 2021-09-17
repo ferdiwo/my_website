@@ -9,7 +9,7 @@ params:
     buttonText: Get Started
     url: blogs/ferdinandwohlenberg
     subtitle: |-
-      Welcome to my personal site! Here I blog about recent learnings in R and publish my latest analyses.
+      Welcome to my personal site! Here I blog about recent learnings in the coding world and publish my latest analyses.
       
     title: Ferdinand Wohlenberg
   blog: {}
