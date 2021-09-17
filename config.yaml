@@ -88,7 +88,7 @@ params:
         url: blogs/ferdinandwohlenberg #Address to call blog via slug. If changing slug to ferdinandwohlenberg -> change url to blogs/ferdinandwohlenberg
       - image: ggplot2.jpg
         subtitle: Introduction to ggplot2 
-        title: ggplot2
+        title: ggplot2 Basics
         url: blogs/ggplot
       - image: pic03.jpg
         subtitle: Lorem Etiam Nullam
