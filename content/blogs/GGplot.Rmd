@@ -358,5 +358,3 @@ shown in blue and calculated between 2016-2019",
 
 ```
 The graph clearly shows us when actual monthly rentals are higher than the average measured between 2016 and 2019 by coloring the surplus green, and coloring areas read where actual rentals are below the average. It is very visually appealing and easily interpretable. \n
-  
-### GGPairs
