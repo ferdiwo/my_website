@@ -82,7 +82,7 @@ params:
   tiles:
     enable: yes
     showcase:
-      - image: pic01.jpg
+      - image: Profile.png
         subtitle: Ferdinand Wohlenberg
         title: About Me
         url: blogs/ferdinandwohlenberg #Address to call blog via slug. If changing slug to ferdinandwohlenberg -> change url to blogs/ferdinandwohlenberg
