@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T22:42:51-05:00"
 description: Exploring the effect of Covid-19 on bike rentals in London, UK
 draft: false
-image:
+image: santander_bikes.jpg
 keywords: ""
 slug: bikerental
 title: Effect of Covid-19 on Bike Rentals in London
