@@ -25,9 +25,9 @@ From an academical standpoint, my background lies in business. A 4-year undergra
    
 While I am quite new to R programming, my first step into the coding world has already happened in 2019, when I was introduced to Python at Cornell University. I was instantly fascinated by the vast amount of possibilities programming languages offer, ranging from conducting thorough analyses to developing a computer game from ground up. Driven by the fascination, I decided to pursue the coding track even further and participated in the Metis Data Science Bootcamp in New York, which taught me everything around Machine Learning. Part of the curriculum were five real-world machine learning projects, which can be found on my [Github](https://github.com/ferdiwo/Metis-2019).\n  
 
-Now I am looking to extend my programming knowledge even further and learn to apply coding to the business world in order to extract valuable insights. 
+Now I am looking to extend my programming knowledge even further by diving in the world of R programming and learning to apply analytics to the business world. This website portrays my journey to generating data-driven insights and ultimately preparing myself to mastering the art of data-driven decision making.
 
-Please find below my CV for more information:
+Below you will find my CV for more information. Feel free to reach out!
 
 ```{r, echo=FALSE, fig.width = 2, fig.height=2}
 knitr::include_graphics("/img/blogs/CV.png", error=FALSE)
