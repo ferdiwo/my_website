@@ -208,8 +208,9 @@ ggplot(vacc_vote_pop, aes(x=vote_percentage, y=series_complete_pop_pct,
   knitr::opts_chunk$set(fig.width=unit(5,"cm"), fig.height=unit(10,"cm"))
 ```
   
+## Summary of findings
 The graph shows a negative correlation between Trump votes and the vaccination status. More precise, in counties with more trump voters, a comparably lower proportion of the population is fully vaccinated against Covid-19. Hence, Trump voters seem to be rather reluctant to Covid-19 vaccinations. \n
   
 Furthermore, we can see that only very few counties are above the herd immunity threshold, while many counties still have less than 5% of the population vaccinated. \n
 
-The points are proportional in size to the county population, therefore, larger points display larger counties. Looking at the graph, we see a lot of large counties clustered around 50% vaccination status and less than 40% of the population being Trump voters. \n 
+The points are proportional in size to the county population, therefore, larger points display larger counties. Looking at the graph, we see a lot of large counties are clustered around 50% vaccination status and therefore above the target of 53.9%. Also, most of the large counties were rather against Trumpm with often less than 40% of the population voting for Trump. \n 
