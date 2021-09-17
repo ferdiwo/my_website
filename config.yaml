@@ -9,9 +9,9 @@ params:
     buttonText: Get Started
     url: blogs/ferdinandwohlenberg
     subtitle: |-
-      Welcome to my personal site! Here I blog about recent learnings in the coding world and publish my latest analyses.
+      Follow me along my journey to discover the world of R and its various application possibilites
       
-    title: Ferdinand Wohlenberg
+    title: Welcome to my Personal Site!
   blog: {}
   contact:
     address:
@@ -78,7 +78,7 @@ params:
     #    url: elements.html
     menu: Menu
     subtitle: By Ferdinand Wohlenberg
-    title: Home
+    title: El Blog
   tiles:
     enable: yes
     showcase:
