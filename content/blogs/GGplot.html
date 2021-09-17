@@ -36,7 +36,7 @@ title: ggplot2
 ggplot(data_employees, aes(x=experience, y=salary))+
   #Add geom_point
   geom_point()</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/scatter_plot%20experience%20vs.%20salary-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/scatter_plot%20experience%20vs.%20salary-1.png" width="768" /></p>
 <p>As you can see, this is a very basic scatter plot without a title and only the variable names on the x- and y-axis. By using the function <code>labs</code> we can specify the plot and axis titles.</p>
 <pre class="r"><code>#Initiate ggplot
 ggplot(data_employees, aes(x=experience, y=salary))+
@@ -48,7 +48,7 @@ ggplot(data_employees, aes(x=experience, y=salary))+
     x = &quot;Experience (in years)&quot;,
     y = &quot;Salary (in USD)&quot;
   )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/scatter_plot2%20experience%20vs.%20salary-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/scatter_plot2%20experience%20vs.%20salary-1.png" width="768" /></p>
 <p>This looks already better, but we can tune the graphs even further by adding additional arguments and functions. 
 To be able to make better inferences, we can add a trend line by adding the function <code>geom_smooth(method=lm)</code>. The geom_smooth function usually returns a grey background in addition to the trendline which represents the confidence interval. By adding the argument <code>se=FALSE</code>, it can be turned off. 
 Or we could color the points according to the gender of the employee by including the argument <code>color = gender</code> in the ggplot initialization.</p>
@@ -64,7 +64,7 @@ Or we could color the points according to the gender of the employee by includin
   )+
   #Adding a trendline, without confidence intervals
   geom_smooth(method = lm, se=FALSE)</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/scatter_plot3%20experience%20vs.%20salary-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/scatter_plot3%20experience%20vs.%20salary-1.png" width="768" /></p>
 <p>This graph provides much more insights than the previous graphs. We can see that for both male and female employees, salary increases with experience, whereas the correlation is stronger for female employees. </p>
 <p>Another useful feature of <code>ggplot</code> is the <code>facet_wrap</code> function if we want to compare plots across a categorical variable. In this case we plotted male and female employees in the same graph, but we can also plot them separately.</p>
 <pre class="r"><code>ggplot(data_employees, aes(x=experience, y=salary))+
@@ -80,7 +80,7 @@ Or we could color the points according to the gender of the employee by includin
   geom_smooth(method = lm, se=FALSE)+
   #Generate separate graphs for each gender
   facet_wrap(~gender) </code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/experience%20vs.%20salary%20by%20gender%20facet_wrap-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/experience%20vs.%20salary%20by%20gender%20facet_wrap-1.png" width="768" /></p>
 </div>
 <div id="line-chart" class="section level2">
 <h2>Line Chart</h2>
@@ -106,7 +106,7 @@ ggplot(exp_bikes_per_month, aes(x=month, y=monthly_average, group=1)) +
     x = &quot;Month&quot;,
     y = &quot;Average bike rentals&quot;
   )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/average%20bike%20rentals%20per%20month-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/average%20bike%20rentals%20per%20month-1.png" width="768" /></p>
 <p>The graph shows us that most bikes are rented in July with more than 37500 bikes, on average, in one month.</p>
 </div>
 <div id="bar-chart" class="section level2">
@@ -131,7 +131,7 @@ ggplot(data_employees_average, aes(x=gender, y=average_salary))+
     x = &quot;Gender&quot;,
     y = &quot;Salary (in USD)&quot;
   )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/bar%20chart%20gender%20and%20mean%20salary-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/bar%20chart%20gender%20and%20mean%20salary-1.png" width="768" /></p>
 <p>If we want, we could also color the bars according to the gender to make it more visual, even though it might not necessarily provide further insights. Naturally, a legend will be created when applying the <code>fill</code>argument to color the bars, but in a bar chart that display the categorical variables on the x-axis, it might be a good idea to remove the legend by adding <code>theme(legend.position = "none")</code>. </p>
 <p>The <code>theme</code>function is generally a very strong function to modify graphs, so if you are interested into fine-tuning graphs have a look at it <a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a>.</p>
 <p>Going back to the bar chart, let’s have a quick look at a colored version:</p>
@@ -147,7 +147,7 @@ ggplot(data_employees_average, aes(x=gender, y=average_salary, fill = gender))+
   )+
   #Hide legend
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/colored%20bar%20chart-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/colored%20bar%20chart-1.png" width="768" /></p>
 <p>Now that bar charts with x- and y-variables have been addressed, let’s have a look at bar charts that only take a look at one variable and display the number of occurences of that variable. The easieast example is to look at the distribution of gender.</p>
 <pre class="r"><code>#Initialize ggplot
 ggplot(data_employees, aes(x=gender))+
@@ -158,7 +158,7 @@ ggplot(data_employees, aes(x=gender))+
     title = &quot;Distribution of gender&quot;,
     x = &quot;Gender&quot;
   )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/dsitribution%20of%20gender-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/dsitribution%20of%20gender-1.png" width="768" /></p>
 <p>From this graph, we can see that we have slightly more female employees than male employees in the dataset.</p>
 </div>
 <div id="density-plot" class="section level2">
@@ -177,7 +177,7 @@ ggplot(data_employees, aes(x=salary))+
   )+
   #Expand x-axis to go from 30,000 to 100,000
   expand_limits(x = c(30000,100000))</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/density%20plot%20salary-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/density%20plot%20salary-1.png" width="768" /></p>
 <p>From the graph, we can take that most employees earn between $65000 and $70000 with a slight skew to the left. Without modifying the graph, we didn’t see the endpoints and therefore couldn’t properly analyze the skewness. Hence, I added the function <code>expand_limits</code> to specify the x-axis dimensions myself.</p>
 <p>We can do the same density plots by gender, simply by adding <code>fill = gender</code>in the<code>ggplot</code> aesthetics. By doing so, it will draw to density plots, one for each gender.</p>
 <pre class="r"><code>#Initialize ggplot
@@ -192,7 +192,7 @@ ggplot(data_employees, aes(x=salary, fill=gender))+
   )+
   #Expand x-axis to go from 30,000 to 100,000
   expand_limits(x = c(30000,100000))</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/density%20plot%20for%20salary%20by%20gender-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/density%20plot%20for%20salary%20by%20gender-1.png" width="768" /></p>
 <p>Here, we can see the distribution of salary for more employees is further to the right, implying that male are earning more than female employees.</p>
 </div>
 <div id="box-plot" class="section level2">
@@ -209,7 +209,7 @@ ggplot(data_employees, aes(x=gender, y=salary))+
     x = &quot;Gender&quot;,
     y = &quot;Salary (in USD)&quot;
   )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/box%20plot%20salary%20across%20gender-1.png" width="1152" /></p>
+<p><img src="/blogs/GGplot_files/figure-html/box%20plot%20salary%20across%20gender-1.png" width="768" /></p>
 <p>The box plot graph shows us that male employees have a higher median income (ca. $75000 vs $65000), while the 25th percentile of salary for male employees is almost as high as the 75th percentile for female employees. This would be a good basis to conduct further analysis as to why this is the case, as, for example, male employees might have more experience.</p>
 </div>
 <div id="ribbon-plots" class="section level2">

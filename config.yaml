@@ -90,10 +90,10 @@ params:
         subtitle: Introduction to ggplot2 
         title: ggplot2 Basics
         url: blogs/ggplot
-      - image: pic03.jpg
-        subtitle: Lorem Etiam Nullam
-        title: Magna
-        url: blogs/magna
+      - image: us_covid.jpg
+        subtitle: Comparing the relationship between Trump votes and vaccination status by U.S. county
+        title: Trump Votes vs. Covid-19 Vaccination
+        url: blogs/election
       - image: pic04.jpg
         subtitle: Nisl Sed Aliquam
         title: Ipsum
