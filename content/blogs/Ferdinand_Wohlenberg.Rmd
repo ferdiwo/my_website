@@ -23,7 +23,9 @@ I was born and raised in Germany, but have since then lived in three different c
     
 From an academical standpoint, my background lies in business. A 4-year undergraduate degree at IE University in Madrid has taught me the fundamentals of the business world, while helping me to discover my quantitative nature and passion for analytics. As a result of this passion, I am currently reading for a Masters in Analytics and Management at London Business School with an expected graduation in 2022.\ 
    
-While I am quite new to R programmin, my first step into the coding world has actually already happened in 2019, when I was introduced to Python at Cornell University. I was instantly fascinated by the vast amount of possibilities programming offers, ranging from conducting thorough analyses to developing my own computer game. Consequently, I decided to pursue the coding track even further and participated in the Metis Data Science Bootcamp in New York, which taught me everything around Machine Learning. Now I am looking to extend my programming knowledge even further and learn to apply coding to the business world in order to extract valuable insights. 
+While I am quite new to R programming, my first step into the coding world has already happened in 2019, when I was introduced to Python at Cornell University. I was instantly fascinated by the vast amount of possibilities programming languages offer, ranging from conducting thorough analyses to developing a computer game from ground up. Driven by the fascination, I decided to pursue the coding track even further and participated in the Metis Data Science Bootcamp in New York, which taught me everything around Machine Learning. Part of the curriculum were five real-world machine learning projects, which can be found on my [Github](https://github.com/ferdiwo/Metis-2019).\n  
+
+Now I am looking to extend my programming knowledge even further and learn to apply coding to the business world in order to extract valuable insights. 
 
 Please find below my CV for more information:
 
