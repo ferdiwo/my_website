@@ -77,8 +77,8 @@ params:
      # - name: Elements
     #    url: elements.html
     menu: Menu
-    subtitle: Road to Analytics
-    title: Ferdi
+    subtitle: By Ferdi
+    title: Road to Analytics
   tiles:
     enable: yes
     showcase:
