@@ -27,8 +27,4 @@ During my early career, I have gathered experience in Consulting, Venture Capita
 
 Please find below my CV for more information:
 
-![](/img/CV.png){width=50%,height=50%} 
-  
-```{r CV, out.width="0.3\\linewidth", include=TRUE, fig.align="center", fig.cap=c("CV September 2021")}
-knitr::include_graphics("/img/CV.png")
-```
+![](/img/blogs/CV.png){width=50%,height=50%} 
