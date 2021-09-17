@@ -37,7 +37,7 @@ The initiation of `ggplot` itself doesn't provide any output. By adding more fun
 
 
 
-```{r ggplot initiation, echo=FALSE, error=FALSE}
+```{r ggplot initiation, echo=FALSE, error=FALSE, results="hide"}
 ggplot(data, aes(x=x-variable, y = y-variable))
 ```
 
