@@ -34,12 +34,8 @@ Before choosing the type of graph you want the data to be displayed in, you have
 Aesthetics also provide the opportunity to color or size items according to specific characteristics. \n
   
 The initiation of `ggplot` itself doesn't provide any output. By adding more functions we can add points, lines, etc. to the graph.\n  
-
-
-
-```{r ggplot initiation, echo=FALSE, error=FALSE, results="hide"}
-ggplot(data, aes(x=x-variable, y = y-variable)
-```
+  
+The basic initiation looks the following way: `ggplot(data, aes(x=x-variable, y = y-variable)`
 
 ## Scatter Plot
 A scatter plot is very useful for examining relationships between two variables. It shows the effect of an independent variable (x) on a dependent variable (y).\n

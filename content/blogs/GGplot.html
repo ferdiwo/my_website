@@ -14,22 +14,21 @@ title: ggplot2
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
 <p>When it comes to analyzing data, <code>ggplot</code> is one of the most powerful packages. It is used for generating graphs and visualizing trends. A multitude of different graphs is readily available and easily customizable within the <code>ggplot</code> package.</p>
 <p>The <code>ggplot</code> package is part of the <code>tidyverse</code> library and is automatically included when loading <code>tidyverse</code>. However it can also separately be called using <code>library(ggplot2)</code>.</p>
 <p>In the following sections, I will provide a brief introduction to <code>ggplot</code> and the different types of graphs and customization it offers. Naturally, there are many more features it offers, but I will only provide a basic overview of its use cases. For more details, please visit <a href="https://ggplot2.tidyverse.org/index.html">ggplot2</a> </p>
-<div id="general-setup" class="section level3">
-<h3>General Setup</h3>
+<div id="general-setup" class="section level2">
+<h2>General Setup</h2>
 <p>Before choosing the type of graph you want the data to be displayed in, you have to initiate <code>ggplot</code> by calling <code>ggplot()</code> and providing the so-called aesthetics, which specify values on x-axis and y-axis. </p>
 <p><strong>Note:</strong> Some charts don’t require a y-value, as they provide distributions of only one specific variable. </p>
 <p>Aesthetics also provide the opportunity to color or size items according to specific characteristics. </p>
 <p>The initiation of <code>ggplot</code> itself doesn’t provide any output. By adding more functions we can add points, lines, etc. to the graph.</p>
-<pre class="r"><code>&quot;ggplot(data, aes(x=x-variable, y = y-variable))&quot;</code></pre>
-<pre><code>## [1] &quot;ggplot(data, aes(x=x-variable, y = y-variable))&quot;</code></pre>
+<p>The basic initiation looks the following way: <code>ggplot(data, aes(x=x-variable, y = y-variable)</code></p>
 </div>
-<div id="scatter-plot" class="section level3">
-<h3>Scatter Plot</h3>
+<div id="scatter-plot" class="section level2">
+<h2>Scatter Plot</h2>
 <p>A scatter plot is very useful for examining relationships between two variables. It shows the effect of an independent variable (x) on a dependent variable (y).</p>
 <p>We can tell <code>ggplot</code> to draw a scatter plot by adding <code>geom_point()</code> after initizalizing <code>ggplot</code>.</p>
 <p>Let’s say we have a dataset for employees that includes their salary, experience, gender, and more. If we want to analyse the relationship between experience and salary we can draw the following scatter plot:</p>
@@ -46,6 +45,7 @@ ggplot(data_employees, aes(x=experience, y=salary))+
   #Add geom_point
   geom_point()</code></pre>
 <p><img src="/blogs/GGplot_files/figure-html/scatter_plot%20experience%20vs.%20salary-1.png" width="672" />
+
 As you can see, this is a very basic scatter plot without a title and only the variable names on the x- and y-axis. By using the function <code>labs</code> we can specify the plot and axis titles.</p>
 <pre class="r"><code>#Initiate ggplot
 ggplot(data_employees, aes(x=experience, y=salary))+
@@ -58,43 +58,20 @@ ggplot(data_employees, aes(x=experience, y=salary))+
     y = &quot;Salary (in USD)&quot;
   )</code></pre>
 <p><img src="/blogs/GGplot_files/figure-html/scatter_plot2%20experience%20vs.%20salary-1.png" width="672" />
+<br>
 This looks already better, but we can tune the graphs even further by adding additional arguments and functions. 
 To be able to make better inferences, we can add a trend line by adding the function <code>geom_smooth(method=lm)</code>. The geom_smooth function usually returns a grey background in addition to the trendline which represents the confidence interval. By adding the argument <code>se=FALSE</code>, it can be turned off. 
 Or we could color the points according to the gender of the employee by including the argument <code>color = gender</code> in the ggplot initialization.</p>
 <p>Let’s see what it would a scatter plot would look like with a trendline and color according to gender:</p>
-<pre class="r"><code>ggplot(data_employees, aes(x=experience, y=salary, color=gender))+
-  #Add geom_point
-  geom_point()+
-  #Add titles
-  labs(
-    title = &quot;Relationship between experience and salary&quot;,
-    x = &quot;Experience (in years)&quot;,
-    y = &quot;Salary (in USD)&quot;,
-  )+
-  #Adding a trendline, without confidence intervals
-  geom_smooth(method = lm, se=FALSE)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/scatter_plot3%20experience%20vs.%20salary-1.png" width="672" />
-This graph provides much more insights than the previous graphs. We can see that for both male and female employees, salary increases with experience, whereas the correlation is stronger for female employees. </p>
+<p><img src="/blogs/GGplot_files/figure-html/scatter_plot3%20experience%20vs.%20salary-1.png" width="672" /></p>
+<p>This graph provides much more insights than the previous graphs. We can see that for both male and female employees, salary increases with experience, whereas the correlation is stronger for female employees. </p>
 <p>Another useful feature of <code>ggplot</code> is the <code>facet_wrap</code> function if we want to compare plots across a categorical variable. In this case we plotted male and female employees in the same graph, but we can also plot them separately.</p>
-<pre class="r"><code>ggplot(data_employees, aes(x=experience, y=salary))+
-  #Add geom_point
-  geom_point()+
-  #Add titles
-  labs(
-    title = &quot;Relationship between experience and salary&quot;,
-    x = &quot;Experience (in years)&quot;,
-    y = &quot;Salary (in USD)&quot;,
-  )+
-  #Adding a trendline, without confidence intervals
-  geom_smooth(method = lm, se=FALSE)+
-  #Generate separate graphs for each gender
-  facet_wrap(~gender) </code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="/blogs/GGplot_files/figure-html/experience%20vs.%20salary%20by%20gender%20facet_wrap-1.png" width="672" /></p>
 </div>
-<div id="line-chart" class="section level3">
-<h3>Line Chart</h3>
+<div id="line-chart" class="section level2">
+<h2>Line Chart</h2>
 <p>Line charts connect values in the order of x-axis values. This can be very helpful when plotting data over time, like stock prices or comparing values across month. </p>
 <p>When using line charts, it is very important to think about the <code>group</code> argument in the <code>ggplot</code> aesthetics, which requires input to a variable for which a value can only occur once. By that I mean, when mapping values across years, days or months will occur multiple times in the dataset and <code>geom_line</code> will have a hard time connecting the dots. Therefore, we need to tell <code>geom_line</code> a grouping so it connects the dots separately for each year.
 In this case, we don’t require a grouping, as every value is unique. However, we still need to specify the group variable by simply putting <code>group=1</code>, which tells <code>ggplot</code> that no grouping is required.</p>
@@ -110,198 +87,47 @@ In this case, we don’t require a grouping, as every value is unique. However, 
 ##   Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 ##   Size: 173 kB
 ## &lt;ON DISK&gt;  /var/folders/04/vzj3g2p50rbg3ln07lw3vvvh0000gn/T//RtmpIDIobK/filec0ba753be5de.xlsx</code></pre>
-<pre class="r"><code>#Compute expected average bike rentals in each month
-exp_bikes_per_month &lt;- bike %&gt;%
-  filter(year %in% 2016:2019) %&gt;%
-  group_by(month) %&gt;%
-  summarize(
-    monthly_average = mean(bikes_hired)
-  )
-
-#Initialize ggplot. If no grouping is required, specify group = 1
-ggplot(exp_bikes_per_month, aes(x=month, y=monthly_average, group=1)) +
-  #Add line to chart
-  geom_line()+
-  #Add titles
-  labs(
-    title = &quot;Monthly average bike rentals in London&quot;,
-    x = &quot;Month&quot;,
-    y = &quot;Average bike rentals&quot;
-  )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/average%20bike%20rentals%20per%20month-1.png" width="672" />
-The graph shows us that most bikes are rented in July with more than 37500 bikes, on average, in one month.</p>
+<p><img src="/blogs/GGplot_files/figure-html/average%20bike%20rentals%20per%20month-1.png" width="672" /></p>
+<p>The graph shows us that most bikes are rented in July with more than 37500 bikes, on average, in one month.</p>
 </div>
-<div id="bar-chart" class="section level3">
-<h3>Bar Chart</h3>
+<div id="bar-chart" class="section level2">
+<h2>Bar Chart</h2>
 <p>Bar charts are often a good alternative to scatter plots when you have a categorical variable and either want to count its occurrence or compare a dependent variable among categories. </p>
 <p>As always, we start by initializing <code>ggplot</code> and then add <code>geom_col()</code> if we have a dependent variable or <code>geom_bar()</code> if we only provide one variable and want to count its occurrence. Let’s have a look use cases for both of those examples. </p>
 <p>For simplicity reasons, we stick to the initial employee data that was used in the scatter plot section. We start by creating a bar chart comparing the average salary across gender. </p>
 <p><strong>Note:</strong> In order to plot the graph, we first have to compute the average salary per gender.</p>
-<pre class="r"><code>#Computing average salary by gender
-data_employees_average &lt;- data_employees %&gt;%
-  group_by(gender) %&gt;%
-  summarize(
-    average_salary = mean(salary)
-  )</code></pre>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees_average, aes(x=gender, y=average_salary))+
-  #Specify bar chart. The width of columns can be changed by providing the &quot;width&quot; argument
-  geom_col(width = 0.5)+
-  #provide titles
-  labs(
-    title = &quot;Compare average salary across gender&quot;,
-    x = &quot;Gender&quot;,
-    y = &quot;Salary (in USD)&quot;
-  )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/bar%20chart%20gender%20and%20mean%20salary-1.png" width="672" />
-If we want, we could also color the bars according to the gender to make it more visual, even though it might not necessarily provide further insights. Naturally, a legend will be created when applying the <code>fill</code>argument to color the bars, but in a bar chart that display the categorical variables on the x-axis, it might be a good idea to remove the legend by adding <code>theme(legend.position = "none")</code>. </p>
+<p><img src="/blogs/GGplot_files/figure-html/bar%20chart%20gender%20and%20mean%20salary-1.png" width="672" /></p>
+<p>If we want, we could also color the bars according to the gender to make it more visual, even though it might not necessarily provide further insights. Naturally, a legend will be created when applying the <code>fill</code>argument to color the bars, but in a bar chart that display the categorical variables on the x-axis, it might be a good idea to remove the legend by adding <code>theme(legend.position = "none")</code>. </p>
 <p>The <code>theme</code>function is generally a very strong function to modify graphs, so if you are interested into fine-tuning graphs have a look at it <a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a>.</p>
-<p>Going back to the bar chart, let’s have a quick look at a colored version:</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees_average, aes(x=gender, y=average_salary, fill = gender))+
-  #Specify bar chart. The width of columns can be changed by providing the &quot;width&quot; argument
-  geom_col(width = 0.5)+
-  #provide titles
-  labs(
-    title = &quot;Compare average salary across gender&quot;,
-    x = &quot;Gender&quot;,
-    y = &quot;Salary (in USD)&quot;
-  )+
-  #Hide legend
-  theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/colored%20bar%20chart-1.png" width="672" />
-Now that bar charts with x- and y-variables have been addressed, let’s have a look at bar charts that only take a look at one variable and display the number of occurences of that variable. The easieast example is to look at the distribution of gender.</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=gender))+
-  #Specify bar chart. The width of columns can be changed by providing the &quot;width&quot; argument
-  geom_bar(width = 0.5)+
-  #provide titles
-  labs(
-    title = &quot;Distribution of gender&quot;,
-    x = &quot;Gender&quot;
-  )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/dsitribution%20of%20gender-1.png" width="672" />
-From this graph, we can see that we have slightly more female employees than male employees in the dataset.</p>
+<p>Going back to the bar chart, let’s have a quick look at a colored version:
+<img src="/blogs/GGplot_files/figure-html/colored%20bar%20chart-1.png" width="672" /></p>
+<p>Now that bar charts with x- and y-variables have been addressed, let’s have a look at bar charts that only take a look at one variable and display the number of occurences of that variable. The easieast example is to look at the distribution of gender.</p>
+<p><img src="/blogs/GGplot_files/figure-html/dsitribution%20of%20gender-1.png" width="672" /></p>
+<p>From this graph, we can see that we have slightly more female employees than male employees in the dataset.</p>
 </div>
-<div id="density-plot" class="section level3">
-<h3>Density Plot</h3>
+<div id="density-plot" class="section level2">
+<h2>Density Plot</h2>
 <p>If we want to have a look at the distribution of values, we can either use a density graph or a box plot. In this section, we will concentrate on the first option, the density plot. </p>
-<p>The density plot provides the distribution of a given variable and provides insights whether a certain distribution is normally distributed or skewed. Going back to the employee dataset, we can analyze the distribution of salary.</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=salary))+
-  #Plot Density graph
-  geom_density()+
-  #Add titles
-  labs(
-    title = &quot;Distribution of salary&quot;,
-    x = &quot;Salary (in USD)&quot;,
-    y = &quot;Density&quot;
-  )+
-  #Expand x-axis to go from 30,000 to 100,000
-  expand_limits(x = c(30000,100000))</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/density%20plot%20salary-1.png" width="672" />
-From the graph, we can take that most employees earn between $65000 and $70000 with a slight skew to the left. Without modifying the graph, we didn’t see the endpoints and therefore couldn’t properly analyze the skewness. Hence, I added the function <code>expand_limits</code> to specify the x-axis dimensions myself.</p>
+<p>The density plot provides the distribution of a given variable and provides insights whether a certain distribution is normally distributed or skewed. Going back to the employee dataset, we can analyze the distribution of salary.
+<img src="/blogs/GGplot_files/figure-html/density%20plot%20salary-1.png" width="672" /></p>
+<p>From the graph, we can take that most employees earn between $65000 and $70000 with a slight skew to the left. Without modifying the graph, we didn’t see the endpoints and therefore couldn’t properly analyze the skewness. Hence, I added the function <code>expand_limits</code> to specify the x-axis dimensions myself.</p>
 <p>We can do the same density plots by gender, simply by adding <code>fill = gender</code>in the<code>ggplot</code> aesthetics. By doing so, it will draw to density plots, one for each gender.</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=salary, fill=gender))+
-  #Plot Density graph. alpha = 0.3 sets the transparency of the curve
-  geom_density(alpha = 0.3)+
-  #Add titles
-  labs(
-    title = &quot;Distribution of salary&quot;,
-    x = &quot;Salary (in USD)&quot;,
-    y = &quot;Density&quot;
-  )+
-  #Expand x-axis to go from 30,000 to 100,000
-  expand_limits(x = c(30000,100000))</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/density%20plot%20for%20salary%20by%20gender-1.png" width="672" />
-Here, we can see the distribution of salary for more employees is further to the right, implying that male are earning more than female employees.</p>
+<p><img src="/blogs/GGplot_files/figure-html/density%20plot%20for%20salary%20by%20gender-1.png" width="672" /></p>
+<p>Here, we can see the distribution of salary for more employees is further to the right, implying that male are earning more than female employees.</p>
 </div>
-<div id="box-plot" class="section level3">
-<h3>Box Plot</h3>
+<div id="box-plot" class="section level2">
+<h2>Box Plot</h2>
 <p>Similary to a density plot, we can use box plots to visualize distributions. Especially when comparing distributions across a categorial variable, box plots are very useful. In general, box plots display the median as the black straight line in the middle of the box and the upper and lower end of the box are the 75th and 25th percentile, respectively.</p>
 <p>Let’s have a look at such graph for the distribution of salary across gender:</p>
-<pre class="r"><code>#Initialize ggplot
-ggplot(data_employees, aes(x=gender, y=salary))+
-  #Draw boxplot
-  geom_boxplot()+
-  #Add titles
-  labs(
-    title = &quot;Distribution of salary across gender&quot;,
-    x = &quot;Gender&quot;,
-    y = &quot;Salary (in USD)&quot;
-  )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/box%20plot%20salary%20across%20gender-1.png" width="672" />
-The box plot graph shows us that male employees have a higher median income (ca. $75000 vs $65000), while the 25th percentile of salary for male employees is almost as high as the 75th percentile for female employees. This would be a good basis to conduct further analysis as to why this is the case, as, for example, male employees might have more experience.</p>
+<p><img src="/blogs/GGplot_files/figure-html/box%20plot%20salary%20across%20gender-1.png" width="672" /></p>
+<p>The box plot graph shows us that male employees have a higher median income (ca. $75000 vs $65000), while the 25th percentile of salary for male employees is almost as high as the 75th percentile for female employees. This would be a good basis to conduct further analysis as to why this is the case, as, for example, male employees might have more experience.</p>
 </div>
-<div id="ribbon-plots" class="section level3">
-<h3>Ribbon Plots</h3>
+<div id="ribbon-plots" class="section level2">
+<h2>Ribbon Plots</h2>
 <p>Ribbon plots draw areas rather than a point or a straight line. This can be very useful if we want to get a feeling for differences among curves or generall of an interval of values.</p>
 <p>If we recall the monthly bike rentals that we looke at in the <code>geom_line</code> section, we can make this graph even more sophisticaed. We could look at how much the monthly bike rentals deviate from the average over the past few years. In that case, we could use <code>geom_ribbon</code> to color the difference between the average monthly rentals and the actual rentals in that month.</p>
-<pre class="r"><code>#Compute expected average bike rentals in each month
-exp_bikes_per_month &lt;- bike %&gt;%
-  filter(year %in% 2016:2019) %&gt;%
-  group_by(month) %&gt;%
-  summarize(
-    monthly_average = mean(bikes_hired)
-  )
-#Compute actual average bike rentals per month
-actual_bikes_per_month &lt;- bike %&gt;%
-  filter(year&gt;=2016) %&gt;%
-  group_by(year, month) %&gt;%
-  summarize(
-    act_monthly_average = mean(bikes_hired)
-  )</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>#Merge actual and expected bike rental in one dataframe
-bikes_per_month &lt;- 
-  left_join(actual_bikes_per_month, exp_bikes_per_month, by=&quot;month&quot;)
-
-#Compute discrepancies in actual and expected bike rentals
-bikes_per_month &lt;- bikes_per_month %&gt;%
-  mutate(
-    excess_rentals = act_monthly_average - monthly_average,
-    #If actual bike rentals are higher than average
-    up = ifelse(act_monthly_average&gt;monthly_average, excess_rentals, 0),
-    #If average bike rentals are lower than average
-    down = ifelse(act_monthly_average&lt;monthly_average, excess_rentals, 0)
-  )
-
-#Initialize ggplot
-ggplot(bikes_per_month, aes(x=month, group = year))+
-  #Draw a line for the actual number of monthly rentals
-  geom_line(aes(y=act_monthly_average),size=0.4, color=&quot;#333333&quot;)+
-  #Draw a line for the average monthly rentals
-  geom_line(aes(y=monthly_average), size=1, color=&quot;blue&quot;) +
-  #Draw a separate graph for each years
-  facet_wrap(~year)+
-  #Apply white background
-  theme_minimal()+
-  #Draw green areas if actual rentals are higher than average
-  geom_ribbon(aes(ymin=monthly_average,ymax=monthly_average+up), 
-              fill=&quot;#7DCD85&quot;,alpha=0.4)+
-  #Draw red areas if actual rentals are lower than average
-  geom_ribbon(aes(ymin=monthly_average+down,ymax=monthly_average),
-              fill=&quot;#CB454A&quot;,alpha=0.4)+
-  #Add titles
-  labs(
-    title=&quot;Monthly changes in TfL bike rentals&quot;,
-    subtitle=&quot;Change from monthly average
-shown in blue and calculated between 2016-2019&quot;,
-    y=&quot;Bike rentals&quot;,
-    x=&quot;&quot;,
-    caption = &quot;Source: TfL, London Data Store&quot;
-  )+
-  #Adjust size for title and axes
-  theme(plot.title = element_text(size=14),
-        plot.subtitle=element_text(size = 12),
-        axis.title.y = element_text(face=&quot;bold&quot;, size=10),
-        axis.text.x = element_text(size=9),
-        axis.text.y = element_text(size=10),
-        plot.caption = element_text(size=8),
-        strip.text = element_text(size=8)
-        )</code></pre>
-<p><img src="/blogs/GGplot_files/figure-html/Monthly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" />
-The graph clearly shows us when actual monthly rentals are higher than the average measured between 2016 and 2019 by coloring the surplus green, and coloring areas read where actual rentals are below the average. It is very visually appealing and easily interpretable. </p>
+<p><img src="/blogs/GGplot_files/figure-html/Monthly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" /></p>
+<p>The graph clearly shows us when actual monthly rentals are higher than the average measured between 2016 and 2019 by coloring the surplus green, and coloring areas read where actual rentals are below the average. It is very visually appealing and easily interpretable. </p>
 </div>
 </div>
