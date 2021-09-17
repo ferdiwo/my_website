@@ -9,9 +9,9 @@ params:
     buttonText: Get Started
     url: blogs/ferdinandwohlenberg
     subtitle: |-
-      Follow me along my journey to discover the world of R and its various application possibilites
+      Follow me along my journey to discover the world of analytics and its various application possibilities
       
-    title: Welcome to my Personal Site!
+    title: Ferdinand Wohlenberg
   blog: {}
   contact:
     address:
@@ -77,8 +77,8 @@ params:
      # - name: Elements
     #    url: elements.html
     menu: Menu
-    subtitle: By Ferdinand Wohlenberg
-    title: El Blog
+    subtitle: Road to Analytics
+    title: Ferdi
   tiles:
     enable: yes
     showcase:
