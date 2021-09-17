@@ -73,7 +73,7 @@ ggplot(data_employees, aes(x=experience, y=salary))+
     y = "Salary (in USD)"
   )
 ```
-  
+<br> 
 This looks already better, but we can tune the graphs even further by adding additional arguments and functions. \n
 To be able to make better inferences, we can add a trend line by adding the function `geom_smooth(method=lm)`. The geom_smooth function usually returns a grey background in addition to the trendline which represents the confidence interval. By adding the argument `se=FALSE`, it can be turned off. \n 
 Or we could color the points according to the gender of the employee by including the argument `color = gender` in the ggplot initialization.\n 
