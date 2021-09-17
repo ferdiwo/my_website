@@ -36,7 +36,7 @@ params:
     text: Please visit [this page](/)
   favicon: favicon.ico
   footer:
-    #copyright: Company Name
+    copyright: Ferdinand Wohlenberg
     enable: yes
     quicklinks:
       - alt: HTML5 UP
@@ -49,24 +49,24 @@ params:
     #  - icon: fa-facebook
     #    label: Facebook
     #    url: https://www.facebook.com
-      - icon: fa-instagram
-        label: Instagram
-        url: https://www.instagram.com/ferdiwo
+    #  - icon: fa-instagram
+    #    label: Instagram
+    #    url: https://www.instagram.com
       - icon: fa-github
         label: GitHub
         url: https://www.github.com/ferdiwo
       - icon: fa-linkedin
         label: LinkedIn
-        url: https://www.linkedin.com/ferdinandwohlenberg
+        url: https://www.linkedin.com/in/ferdinandwohlenberg
   image: ''
   name: Your name
   navigation:
     button1:
       - name: Get Started
         url: blogs
-    button2:
-      - name: Log In
-        url: '#'
+   # button2:
+    #  - name: Log In
+     #   url: '#'
     links:
       - name: Home
         url: '#'
