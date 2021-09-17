@@ -6,10 +6,11 @@ googleAnalytics: ''
 disqusShortname: ''
 params:
   banner:
-    buttonText: About Me
+    buttonText: Get Started
     url: blogs/ferdinandwohlenberg
     subtitle: |-
-      Masters in Analytics and Management candidate at London Business School
+      Welcome to my personal site! Here I blog about recent learnings in R and publish my latest analyses.
+      
     title: Ferdinand Wohlenberg
   blog: {}
   contact:
@@ -83,7 +84,7 @@ params:
     showcase:
       - image: pic01.jpg
         subtitle: Ferdinand Wohlenberg
-        title: About me
+        title: About Me
         url: blogs/ferdinandwohlenberg #Address to call blog via slug. If changing slug to ferdinandwohlenberg -> change url to blogs/ferdinandwohlenberg
       - image: pic02.jpg
         subtitle: Feugiat Amet Tempus

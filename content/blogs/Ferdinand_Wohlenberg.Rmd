@@ -3,10 +3,7 @@ categories:
 - ""
 - ""
 date: "2017-10-31T22:42:51-05:00"
-description: Nullam et orci lorem consequat tincidunt vivamus et sagittis magna
-  sed nunc rhoncus condimentum sem. In efficiturigula tate urna. Maecenas massa
-  sed magna lacinia magna  lorem ipsum Nullam et orci eu lorem
-  consequat tincidunt. Vivamus et  tempus.
+description: About Ferdinand Wohlenberg
 draft: false
 image: Profile.png
 keywords: ""
@@ -27,30 +24,9 @@ I was born and raised in Germany, but have since then lived in three different c
 From an academical standpoint, my background lies in business. A 4-year undergraduate degree at IE University in Madrid has taught me the fundamentals of the business world, while helping me to discover my quantitative nature and passion for analytics. As a result of this passion, I am currently reading for a Masters in Analytics and Management at London Business School with an expected graduation in 2022.\ 
    
 During my early career, I have gathered experience in Consulting, Venture Capital and Entrepreneurship. Especially fast-paced environments appeal to me, which is why I am looking to go back into Consulting after graduating from LBS. The large variety of projects in combination with its bright workforce make Consulting the perfect entry-level job for me to further develop my professional and personal skillset.\ 
+
+Please find below my CV for more information:
    
-### Education 
-
-
-
-
-```{r}
-\usepackage{tcolorbox}
-\newtcolorbox{blackbox}{
-  colback=black,
-  colframe=orange,
-  coltext=white,
-  boxsep=5pt,
-  arc=4pt}
+```{r CV, out.width="0.3\\linewidth", include=TRUE, fig.align="center", fig.cap=c("CV September 2021"), echo=FALSE}
+knitr::include_graphics("./images/CV.pdf")
 ```
-
-
-
-```
-
-
-
-⁄⁄
-### Professional Experience
-
-### Technical Skills
-
