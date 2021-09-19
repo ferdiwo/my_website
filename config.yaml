@@ -62,11 +62,11 @@ params:
   name: Your name
   navigation:
     button1:
-      - name: Get Started
-        url: contact
-   # button2:
-    #  - name: Log In
-     #   url: '#'
+      - name: Github
+        url: https://www.github.com/ferdiwo
+    button2:
+      - name: LinkedIn
+        url: https://www.linkedin.com/in/ferdinandwohlenberg
     links:
       - name: Home
         url: '#'
@@ -98,22 +98,22 @@ params:
         subtitle: Exploring the effect of Covid-19 on bike rentals in London, UK
         title: Effect of Covid-19 on Bike Rentals
         url: blogs/bikerental
-      - image: pic05.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Consequat
-        url: blogs/ipsum
-      - image: pic06.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Etiam
-        url: blogs/ipsum
-  two:
-    buttonText: Get Started
-    enable: yes
-    subtitle: "Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero.
-      \n    Mauris aliquet magna magna sed nunc rhoncus pharetra. \n    Pellentesque
-      condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia
-      pellentesque lorem ipsum dolor. \n    Nullam et orci eu lorem consequat tincidunt.
-      Vivamus et sagittis libero.\n    Mauris aliquet magna magna sed nunc rhoncus
-      amet pharetra et feugiat tempus."
-    title: Massa libero
-    url: blogs
+    #  - image: pic05.jpg
+     #   subtitle: Ipsum Dolor Sit Amet
+      #  title: Consequat
+       # url: blogs/ipsum
+    #  - image: pic06.jpg
+     #   subtitle: Feugiat Amet Tempus
+      #  title: Etiam
+       # url: blogs/ipsum
+  #two:
+   # buttonText: Get Started
+  #  enable: yes
+  #  subtitle: "Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero.
+  #    \n    Mauris aliquet magna magna sed nunc rhoncus pharetra. \n    Pellentesque
+  #    condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia
+  #    pellentesque lorem ipsum dolor. \n    Nullam et orci eu lorem consequat tincidunt.
+  #    Vivamus et sagittis libero.\n    Mauris aliquet magna magna sed nunc rhoncus
+  #    amet pharetra et feugiat tempus."
+  #  title: Massa libero
+  #  url: blogs
