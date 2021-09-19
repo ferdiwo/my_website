@@ -63,7 +63,7 @@ params:
   navigation:
     button1:
       - name: Get Started
-        url: blogs/contact
+        url: contact
    # button2:
     #  - name: Log In
      #   url: '#'
