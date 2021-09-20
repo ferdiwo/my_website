@@ -74,8 +74,8 @@ params:
         url: blogs/ferdinandwohlenberg
       - name: Blogs
         url: blogs
-      - name: Elements
-        url: elements.html
+    #  - name: Elements
+    #    url: elements.html
     menu: Menu
     subtitle: By Ferdi
     title: Data Analytics
@@ -98,10 +98,10 @@ params:
         subtitle: Exploring the effect of Covid-19 on bike rentals in London, UK
         title: Effect of Covid-19 on Bike Rentals
         url: blogs/bikerental
-    #  - image: pic05.jpg
-     #   subtitle: Ipsum Dolor Sit Amet
-      #  title: Consequat
-       # url: blogs/ipsum
+      - image: pic05.jpg
+        subtitle: Ipsum Dolor Sit Amet
+        title: Consequat
+        url: blogs/election
     #  - image: pic06.jpg
      #   subtitle: Feugiat Amet Tempus
       #  title: Etiam
