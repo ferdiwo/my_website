@@ -55,7 +55,8 @@ ggplot(aes(x=bikes_hired))+
     title = &quot;Distribution of daily bike rentals by month and year&quot;,
     x = &quot;Daily bike rentals&quot;,
     y = &quot;Density&quot;
-  )</code></pre>
+  )+
+  theme(axis.text.x = element_text(size = 7))</code></pre>
 <p><img src="/blogs/Bike_rental_files/figure-html/plot%20bike%20rentals%20by%20month%20and%20year-1.png" width="960" /></p>
 <p>Looking at the graph, it can be observed that curves are flattening between March and June 2020 compared to previous years, implying larger variances in the number of bikes rented on a given day. In early 2020 Covid-19 hit the world and the first wave of infections arrived around March and April 2020. As previously mentioned, people were put in an unprecedented situation with living through a pandemic. Many people were afraid to go out, in fear of catching the virus, the consequences of which have not yet been fully researched.<br />
 People have lost their daily rhythm by being locked in and working remotely. In previous years, the curve was pretty steep and peaked at around 30k or 40k bikes rented per day, as people probably used them to get to work, but during the first Covid wave that has changed. People used bikes more infrequently and therefore flattening the distribution.
@@ -78,9 +79,8 @@ actual_bikes_per_month &lt;- bike %&gt;%
   group_by(year, month) %&gt;%
   summarize(
     act_monthly_average = mean(bikes_hired)
-  )</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>#Merge actual and expected bike rental in one dataframe
+  )
+#Merge actual and expected bike rental in one dataframe
 bikes_per_month &lt;- 
   left_join(actual_bikes_per_month, exp_bikes_per_month, by=&quot;month&quot;)
 
@@ -118,10 +118,10 @@ shown in blue and calculated between 2016-2019&quot;,
         plot.caption = element_text(size=8),
         strip.text = element_text(size=8)
         )</code></pre>
-<p><img src="/blogs/Bike_rental_files/figure-html/Monthly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" />
-The graph display the average daily bike rentals by month measured between 2016 and 2019 as the blue line, and the actual average daily bike rentals for each month using the black line. Whenever the actual values are higher than the 2016-2019 average, the area between the two curves is colored green. When the actual value is below the 2016-2019 average, the area is colored red. </p>
-<p>Jumping straight to 2020, we can actually discover that bike rentals were much lower during the first Covid-19 wave than the average monthly bike rental measured between 2016 and 2019. This finding conforms with the flatter distribution curve. However, in May bike rentals started picking up pace and were higher than the average from previous years. This is interesting, as distribution curves were really flat in May and June 2020, but people were actually using the bikes despite the pandemic. An explanation for this could have been people not wanting to use the Tube and therefore deciding to stay at the fresh air and use a bike instead. </p>
-<p>However, looking at 2021, bike rentals in May and June were lower than the average, which can be lead back to the lockdown the United Kingdom was experiencing.</p>
+<p><img src="/blogs/Bike_rental_files/figure-html/Monthly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" /></p>
+<p>The graph display the average daily bike rentals by month measured between 2016 and 2019 as the blue line, and the actual average daily bike rentals for each month using the black line. Whenever the actual values are higher than the 2016-2019 average, the area between the two curves is colored green. When the actual value is below the 2016-2019 average, the area is colored red. </p>
+<p>Jumping straight to 2020, we can actually discover that bike rentals were much lower during the first Covid-19 wave than the average monthly bike rental measured between 2016 and 2019. However, in May bike rentals started picking up pace and were higher than the average from previous years. This is interesting, as distribution curves were really flat in May and June 2020, but people were actually using the bikes despite the pandemic. An explanation for this could have been people not wanting to use the Tube and therefore deciding to stay at the fresh air and use a bike instead. </p>
+<p>However, looking at 2021, bike rentals in May and June were lower than the measured average between 2016 and 2019, which can be led back to the lockdown the United Kingdom was experiencing.</p>
 <p>This data analysis was conducted on a month basis, but we can dig even deeper by having a look at weekly values. Let’s do a similar analysis to before, but this time we will visualize the deviation (%) of average daily bike rentals by week from the weekly averages measured between 2016 and 2019. </p>
 </div>
 <div id="weekly-changes-in-tfl-bike-rentals" class="section level2">
@@ -140,9 +140,9 @@ actual_bikes_per_week &lt;- bike %&gt;%
   group_by(week,year) %&gt;%
   summarize(
     act_weekly_average = mean(bikes_hired)
-  )</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;week&#39;. You can override using the `.groups` argument.</code></pre>
-<pre class="r"><code>#Merge actual and expected bike rental in one dataframe
+  )
+
+#Merge actual and expected bike rental in one dataframe
 bikes_per_week &lt;- 
   left_join(actual_bikes_per_week, exp_bikes_per_week, by=&quot;week&quot;)
 
@@ -155,6 +155,7 @@ bikes_per_week &lt;- bikes_per_week %&gt;%
     up = if_else(excess_rentals&gt;0, excess_rentals,0),
     down = if_else(excess_rentals &lt; 0, excess_rentals,0)
   )
+
 #Plot graph
 ggplot(bikes_per_week,aes(x=week))+
          geom_line(aes(y=excess_rentals), size=0.2)+
@@ -193,12 +194,12 @@ calculated between 2016-2019&quot;,
         strip.text = element_text(size=10)
         )</code></pre>
 <p><img src="/blogs/Bike_rental_files/figure-html/Weekly%20changes%20in%20TfL%20bike%20rentals-1.png" width="1152" />
-Jumping straight again to 2020, we can actually see that Covid-19 had a severe impact on bike rental. The first few weeks in 2020, where Covid first hit the population in the UK, bike rentals dropped tremendously, as shown by the red area around week 13. This agrees with the previously generated graph that displayed a reduction in bike rentals around March and April 2020. Then again, as seen in the previous graph, bike rentals increased around may (week 20) and went above the average bike rental from previous years.</p>
+Jumping straight again to 2020, we can actually see that Covid-19 had a severe impact on bike rental. The first few weeks in 2020, where Covid first hit the population in the UK, bike rentals dropped tremendously, as shown by the red area around week 13. This agrees with the previously generated graph that displayed a reduction in bike rentals around March and April 2020. Then again, as seen in the previous graph, bike rentals increased around May (week 20) and went above the average bike rental from previous years.</p>
 <p>Looking at 2021, the first 10 weeks of 2021 went quite bad for bike rental, probably due to another lockdown in the UK.</p>
 </div>
 <div id="summary-of-findings" class="section level2">
 <h2>Summary of findings</h2>
-<p>The Covid-19 pandemic definitely had its effect on bike rentals in London. When the first wave hit the UK, bike rentals went down by a lot, probably in fear of catching the virus and also the reduced need to use a bike to get to work. However, people quickly recovered from the initial fear and started using bikes after the first wave more than in the previous years. This could potentially be lead back to the fact that people didn’t want to use the subway, but rather stay at the fresh air with a bike, since the risk of catching the Covid virus is much lower.</p>
+<p>The Covid-19 pandemic definitely had its effect on bike rentals in London. When the first wave hit the UK, bike rentals went down by a lot, probably in fear of catching the virus and also the reduced need to use a bike to get to work. However, people quickly recovered from the initial fear and started using bikes after the first wave more than in the previous years. This could potentially be led back to the fact that people didn’t want to use the subway, but rather stay at the fresh air with a bike, since the risk of catching the Covid virus is much lower.</p>
 <p>It is generally very obvious that the deviation in daily bike rentals increased a lot since the pandemic, as people go into lockdowns, which reduces the number of rentals, but are overly enthusiastic when a lockdown ends and explore the city with bikes much more than before.</p>
 </div>
 </div>

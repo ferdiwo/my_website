@@ -18,14 +18,14 @@ During my time at LBS, our professor provided us with an article ([The Racial Fa
 The graph generated some really interesting insights and I decided to reproduce the graph by using R coding.\n
 
 # Data Analysis  
-Before I was able to conduct any analysis, I had to collect data by using three different sources:\n
-1.  Vaccination by county: [CDC data](https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh)
-2.  Election Results: [County Presidential Election Returns 2000-2020](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ)
+Before I was able to conduct any analysis, I had to collect data by using three different sources:  
+1.  Vaccination by county: [CDC data](https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh)  
+2.  Election Results: [County Presidential Election Returns 2000-2020](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ)  
 3.  Population estimate: [Population by county](https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232)  
   
 ## Loading Libraries  
 ```{r load-libraries, warning=FALSE, message=FALSE}
-library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(tidyverse)
 library(ggthemes)
 library(skimr)
 library(janitor)
@@ -65,10 +65,10 @@ population <- vroom(population_url) %>%
 
 ```
   
-The plan is to setup 3 separate dataframes for population, vaccination rate and election results and ultimately merging the dataframe by using the fips variable. Before joining the dataframes, I had to clean the data and make sure it has exactly the information I need for my analysis. \n
+The plan is to setup 3 separate dataframes for population, vaccination rate and election results and ultimately merging the dataframe by using the `fips` variable. Before joining the dataframes, I had to clean the data and make sure it has exactly the information I need for my analysis. \n
  
 ## Clean and prepare election data  
-First, a new dataframe needs to be created to only include Donald Trump votes. Subsequently, the no. of votes needs to be expressed as a percentage of the overall votes in each district/county.  
+First, a new dataframe needs to be created to only include Donald Trump votes. Subsequently, the number of votes needs to be expressed as a percentage of the overall votes for each district/county.  
 ```{r clean election dataset, results="hide"}
 # First we filter the dataset only for Donald Trump votes
 election_trump <- election2020_results%>%
@@ -155,7 +155,7 @@ skim(vaccinations_fips)
 ```
 
 ## Merging the 3 dataframes (tibbles) into 1
-As all dataframes are prepared with the necessary data, they can now be joined by using `inner_join()`.
+As all dataframes have been prepared to include the necessary data, they can now be joined by using `inner_join()`.
 ```{r merge dataframes}
 #Merge vaccination and trump votes
 vaccination_vote <- inner_join(vaccinations_fips, election_trump_filtered, 
@@ -169,7 +169,7 @@ vacc_vote_pop <- na.omit(vacc_vote_pop)
 ```
 
 ## Draw the graph
-```{r building the graph, fig.width=12, fig.height=10}
+```{r building the graph, fig.width=16, fig.height=14, message=FALSE}
 ggplot(vacc_vote_pop, aes(x=vote_percentage, y=series_complete_pop_pct, 
                           size=pop_estimate_2019))+
   geom_point(alpha=0.3)+
@@ -211,4 +211,4 @@ The graph shows a negative correlation between Trump votes and the vaccination s
   
 Furthermore, we can see that only very few counties are above the herd immunity threshold, while many counties still have less than 5% of the population vaccinated. \n
 
-The points are proportional in size to the county population, therefore, larger points display larger counties. Looking at the graph, we see a lot of large counties are clustered around 50% vaccination status and therefore above the target of 53.9%. Also, most of the large counties were rather against Trumpm with often less than 40% of the population voting for Trump. \n 
+The points are proportional in size to the county population, therefore, larger points display larger counties. Looking at the graph, we see a lot of large counties are clustered around 50% vaccination status and therefore often above the target of 53.9%. Also, most of the large counties were rather against Trumpm with often less than 40% of the population voting for Trump. \n 
