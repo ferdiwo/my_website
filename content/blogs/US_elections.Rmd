@@ -19,12 +19,9 @@ The graph generated some really interesting insights and I decided to reproduce 
 
 # Data Analysis  
 Before I was able to conduct any analysis, I had to collect data by using three different sources:  
-  
-**1.  Vaccination by county:** [CDC data](https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh)   
-  
-**2.  Election Results:** [County Presidential Election Returns 2000-2020](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ)   
-  
-**3.  Population estimate:** [Population by county](https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232)   
+1. **Vaccination by county:** [CDC data](https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh)   
+2. **Election Results:** [County Presidential Election Returns 2000-2020](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ)  
+3. **Population estimate:** [Population by county](https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232)   
    
 ## Loading Libraries  
 ```{r load-libraries, warning=FALSE, message=FALSE}
@@ -206,7 +203,7 @@ ggplot(vacc_vote_pop, aes(x=vote_percentage, y=series_complete_pop_pct,
   scale_y_continuous(breaks=seq(0,1,0.05),labels=function(x) paste0(x*100, "%"),
                      expand=c(0,0), limits=c(0,1))+
   scale_x_continuous(breaks=seq(0,1,0.05),labels = function(x) paste0(x*100, "%"),
-                     expand=c(0,0), limits=c(0,1))+
+                     expand=c(0,0), limits=c(0,1))
 ```
   
 ## Summary of findings

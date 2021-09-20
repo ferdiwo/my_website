@@ -3,7 +3,7 @@ categories:
 - ""
 - ""
 date: "2017-10-31T22:42:51-05:00"
-description: Comparing the relationship between Trump votes and vaccination status by U.S. count
+description: Comparing the relationship between Trump votes and vaccination status by U.S. county
 draft: false
 image: us_covid.jpg
 keywords: ""
@@ -21,12 +21,13 @@ title: Trump Votes vs. Vaccination Status by U.S. County
 </div>
 <div id="data-analysis" class="section level1">
 <h1>Data Analysis</h1>
-<p>Before I was able to conduct any analysis, I had to collect data by using three different sources:. Vaccination by county: <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh">CDC data</a>
-2. Election Results: <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">County Presidential Election Returns 2000-2020</a>
-3. Population estimate: <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232">Population by county</a></p>
+<p>Before I was able to conduct any analysis, I had to collect data by using three different sources:<br />
+1. <strong>Vaccination by county:</strong> <a href="https://data.cdc.gov/Vaccinations/COVID-19-Vaccinations-in-the-United-States-County/8xkx-amqh">CDC data</a><br />
+2. <strong>Election Results:</strong> <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/VOQCHQ">County Presidential Election Returns 2000-2020</a><br />
+3. <strong>Population estimate:</strong> <a href="https://www.ers.usda.gov/webdocs/DataFiles/48747/PopulationEstimates.csv?v=2232">Population by county</a></p>
 <div id="loading-libraries" class="section level2">
 <h2>Loading Libraries</h2>
-<pre class="r"><code>library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+<pre class="r"><code>library(tidyverse)
 library(ggthemes)
 library(skimr)
 library(janitor)
@@ -61,11 +62,11 @@ population &lt;- vroom(population_url) %&gt;%
   
   # pad FIPS codes with leading zeros, so they are always made up of 5 characters
   mutate(fips = stringi::stri_pad_left(fips, width=5, pad = &quot;0&quot;))</code></pre>
-<p>The plan is to setup 3 separate dataframes for population, vaccination rate and election results and ultimately merging the dataframe by using the fips variable. Before joining the dataframes, I had to clean the data and make sure it has exactly the information I need for my analysis. </p>
+<p>The plan is to setup 3 separate dataframes for population, vaccination rate and election results and ultimately merging the dataframe by using the <code>fips</code> variable. Before joining the dataframes, I had to clean the data and make sure it has exactly the information I need for my analysis. </p>
 </div>
 <div id="clean-and-prepare-election-data" class="section level2">
 <h2>Clean and prepare election data</h2>
-<p>First, a new dataframe needs to be created to only include Donald Trump votes. Subsequently, the no. of votes needs to be expressed as a percentage of the overall votes in each district/county.</p>
+<p>First, a new dataframe needs to be created to only include Donald Trump votes. Subsequently, the number of votes needs to be expressed as a percentage of the overall votes for each district/county.</p>
 <pre class="r"><code># First we filter the dataset only for Donald Trump votes
 election_trump &lt;- election2020_results%&gt;%
   filter(candidate ==&quot;DONALD J TRUMP&quot;)
@@ -150,7 +151,7 @@ skim(vaccinations_fips)</code></pre>
 </div>
 <div id="merging-the-3-dataframes-tibbles-into-1" class="section level2">
 <h2>Merging the 3 dataframes (tibbles) into 1</h2>
-<p>As all dataframes are prepared with the necessary data, they can now be joined by using <code>inner_join()</code>.</p>
+<p>As all dataframes have been prepared to include the necessary data, they can now be joined by using <code>inner_join()</code>.</p>
 <pre class="r"><code>#Merge vaccination and trump votes
 vaccination_vote &lt;- inner_join(vaccinations_fips, election_trump_filtered, 
                               by=&quot;fips&quot;, copy=FALSE)
@@ -196,16 +197,13 @@ vacc_vote_pop &lt;- na.omit(vacc_vote_pop)</code></pre>
   scale_y_continuous(breaks=seq(0,1,0.05),labels=function(x) paste0(x*100, &quot;%&quot;),
                      expand=c(0,0), limits=c(0,1))+
   scale_x_continuous(breaks=seq(0,1,0.05),labels = function(x) paste0(x*100, &quot;%&quot;),
-                     expand=c(0,0), limits=c(0,1))+
-  #Setting figure dimensions
-  knitr::opts_chunk$set(fig.width=unit(5,&quot;cm&quot;), fig.height=unit(10,&quot;cm&quot;))</code></pre>
-<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="/blogs/US_elections_files/figure-html/building%20the%20graph-1.png" width="672" /></p>
+                     expand=c(0,0), limits=c(0,1))</code></pre>
+<p><img src="/blogs/US_elections_files/figure-html/building%20the%20graph-1.png" width="1536" /></p>
 </div>
 <div id="summary-of-findings" class="section level2">
 <h2>Summary of findings</h2>
 <p>The graph shows a negative correlation between Trump votes and the vaccination status. More precise, in counties with more trump voters, a comparably lower proportion of the population is fully vaccinated against Covid-19. Hence, Trump voters seem to be rather reluctant to Covid-19 vaccinations. </p>
 <p>Furthermore, we can see that only very few counties are above the herd immunity threshold, while many counties still have less than 5% of the population vaccinated. </p>
-<p>The points are proportional in size to the county population, therefore, larger points display larger counties. Looking at the graph, we see a lot of large counties are clustered around 50% vaccination status and therefore above the target of 53.9%. Also, most of the large counties were rather against Trumpm with often less than 40% of the population voting for Trump. </p>
+<p>The points are proportional in size to the county population, therefore, larger points display larger counties. Looking at the graph, we see a lot of large counties are clustered around 50% vaccination status and therefore often above the target of 53.9%. Also, most of the large counties were rather against Trumpm with often less than 40% of the population voting for Trump. </p>
 </div>
 </div>
