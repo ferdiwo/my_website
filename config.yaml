@@ -74,8 +74,8 @@ params:
         url: blogs/ferdinandwohlenberg
       - name: Blogs
         url: blogs
-     # - name: Elements
-    #    url: elements.html
+      - name: Elements
+        url: elements.html
     menu: Menu
     subtitle: By Ferdi
     title: Data Analytics
