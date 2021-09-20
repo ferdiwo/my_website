@@ -19,7 +19,7 @@ library(janitor)
 ```
 
 ### Hi, I'm Ferdi!
-I was born and raised in Germany, but have since then lived in three different countries, including Spain, United States and the United Kingdom. In general, I am a very curious person and enjoy discovering unknown territories, be it a new culture or country, or acquiring a completely new skill set such as data analytics.\n  
+I was born and raised in Germany, but have since then lived in three different countries, including Spain, United States, and the United Kingdom. In general, I am a very curious person and enjoy discovering unknown territories, be it a new culture or country, or acquiring a completely new skill set such as data analytics.\n  
     
 From an academical standpoint, my background lies in business. A 4-year undergraduate degree at IE University in Madrid has taught me the fundamentals of the business world, while helping me to discover my quantitative nature and passion for analytics.\n 
   
