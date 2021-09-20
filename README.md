@@ -1,2 +1,2 @@
 # my_website
-This website is outlines the education and professional experience of Ferdinand Wohlenberg
+This website showcases my journey to becoming a Data Analytics professional. It includes my most recent analytics projects, as well as a brief overview of my background and several possibilities to get in touch with me.
